@@ -2,16 +2,23 @@
 <html>
 <body>
 Hello2
+
+
 <?php
 echo "My first PHP script!";
 echo file_exists(__DIR__."/budget.sqlite3");
 $myPDO = new PDO("sqlite:".__DIR__."/budget.sqlite3");
 $result = $myPDO->query("SELECT Type FROM expense_type");
 print "These are types\n";
+$rows=array();
     foreach($result as $row)
     {
-        print "Type: ".$row['Type'] . "\n";
+        $rows[] = $row['Type'];
     }
+echo "<br /> " . json_encode($rows);
+
+
+
 $epoch = 1539226804;
 echo date('M/d/Y', $epoch). "<br />"; // output as RFC 2822 date - returns local time
 $date = new DateTime('10/10/2018'); // format: MM/DD/YYYY
