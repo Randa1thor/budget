@@ -11,7 +11,7 @@ Current Date:
 
 <?php
 
-$cur_date=strtotime("11/10/2018");
+$cur_date=time();
 
 echo date('l M d Y', $cur_date);
 
@@ -29,9 +29,11 @@ echo "<br />";
 
 
 
+
 ?>
 
 <div class="container">
+<div id="test"></div>
 <i class="prev-month fa fa-chevron-left fa-3x">[<]</i> <i class="next-month fa fa-chevron-right fa-3x">[>]</i>
 <br>
 <div class="month-year text-center"><h3><?php echo "$cur_month  $cur_year";?></h3></div>
@@ -544,29 +546,11 @@ echo "<br />";
 
 <script>
 
-function mycalendar(){
-	this.month;
-	this.year;
-	this.day;
-	this.first_day;
-	this.num_of_days;
-	this.prev_month;
-	this.prev_days;
-	this.next_month;
-	
-	
-	this.set_days=function(){
-		
-		alert('hello');
-	}
-	
-	
-	
-	
-}
+
 
 var viratKohli = new mycalendar();
-viratKohli.set_days();
+viratKohli.set_days("10","11","2018");
+viratKohli.show();
 	
 
 </script>
