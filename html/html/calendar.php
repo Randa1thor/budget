@@ -1,9 +1,13 @@
 <!DOCTYPE html>
+ <head>
+<link rel="stylesheet" type="text/css" href="calendar.css">
+<script src="calendar.js" type="text/javascript"></script>
+</head> 
 <html>
 <body>
 
 
-Current Date: <?php ?>
+Current Date: 
 
 <?php
 
@@ -26,104 +30,513 @@ echo "<br />";
 
 
 ?>
-<style>
-table {
-    border-collapse: collapse;
-}
 
-table, td, th {
-    border: 1px solid black;
-}
-
-.innercalendarcell {
-    width: 100%;
-}
-
-.dayofmonth td{
-    text-align:right;
-}
-
-</style>
 <div class="container">
 <i class="prev-month fa fa-chevron-left fa-3x">[<]</i> <i class="next-month fa fa-chevron-right fa-3x">[>]</i>
 <br>
 <div class="month-year text-center"><h3><?php echo "$cur_month  $cur_year";?></h3></div>
-<table class="table table-bordered">
-<tr class='calendarheader'>
-    <th>Sunday</th>
-    <th>Monday</th>
-    <th>Tuesday</th>
-    <th>Wednesday</th>
-    <th>Thursday</th>
-    <th>Friday</th>
-    <th>Saturday</th>
-    <th>Total</th>
-</tr>    
-<tr class="weekone">
+<table class="calendar">
+	<tr class='calendarheader'>
+    	<th>Sunday</th>
+    	<th>Monday</th>
+    	<th>Tuesday</th>
+    	<th>Wednesday</th>
+    	<th>Thursday</th>
+    	<th>Friday</th>
+    	<th>Saturday</th>
+    	<th>Total</th>
+	</tr>    
+	<tr class="weekone">
+    	<td>
+    		<table class="innercalendarcell">
+    			<tr class="dayofmonth">
+    				<td>1</td>
+    			</tr>
+    			<tr class="calendarinfo">
+    				<td>&nbsp</td>
+    			</tr>
+    		</table>
+    	</td>
     <td>
     	<table class="innercalendarcell">
     		<tr class="dayofmonth">
     			<td>1</td>
     		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
     	</table>
     </td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
 </tr>        
 <tr class="weektwo">
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
 </tr>    
 <tr class="weekthree">
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
 </tr>       
 <tr class="weekfour">
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
 </tr>    
 <tr class="weekfive">
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
 </tr>       
 <tr class="weeksix">
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
-    <td>&nbsp</td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
+    <td>
+    	<table class="innercalendarcell">
+    		<tr class="dayofmonth">
+    			<td>1</td>
+    		</tr>
+    		<tr class="calendarinfo">
+    			<td>&nbsp</td>
+    		</tr>
+    	</table>
+    </td>
 </tr>    
 </table>    
 </div>
@@ -131,35 +544,30 @@ table, td, th {
 
 <script>
 
-$(document).ready(function () {
-
-	  //var d = new Date(); should be able to get all this from server
-
-	  function myCalendar() {// slightly built wrong html should be mostly built classes should be able to handle changes
-	    var month = <?php echo $cur_month; ?>;
-	    var day = <?php echo $cur_day; ?>;
-	    var year = <?php echo $cur_year; ?>;
-	    
-	    // Displays the current month in Strings and the actual year 
-
+function mycalendar(){
+	this.month;
+	this.year;
+	this.day;
+	this.first_day;
+	this.num_of_days;
+	this.prev_month;
+	this.prev_days;
+	this.next_month;
+	
+	
+	this.set_days=function(){
 		
+		alert('hello');
+	}
+	
+	
+	
+	
+}
 
-	  myCalendar();
-
-	  //Navigation Buttons    
-
-	  $('.prev-month').click(function () {
-	    $('.month-year').empty();
-	    d.setUTCMonth(d.getUTCMonth() - 1);
-	    myCalendar();
-	  });
-
-	  $('.next-month').click(function () {
-	    $('.month-year').empty();
-	    d.setUTCMonth(d.getUTCMonth() + 1);
-	    myCalendar();
-	  });
-	});
+var viratKohli = new mycalendar();
+viratKohli.set_days();
+	
 
 </script>
 

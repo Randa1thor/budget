@@ -1,0 +1,15 @@
+table {
+    border-collapse: collapse;
+}
+
+.calendar td, th {
+    border: 1px solid black;
+}
+
+.innercalendarcell {
+    width: 100%;
+}
+
+.dayofmonth td{
+    text-align:right;
+}
