@@ -1,41 +1,31 @@
 <?php
+
+require_once("./calendar/calendardates.php");
+
 $cur_date=time();
 if (!empty($_POST))
 {
     $cur_date=strtotime( $_POST["date"]);
 }
 
-
-
-
-$prev_date=strtotime('-1 month', $cur_date);
-$next_date=strtotime('+1 month', $cur_date);
-
-
-$cur_month=date('M',$cur_date);
-$cur_day=date("d",$cur_date);
-$cur_year=date("Y",$cur_date);
-
-
-$cur_prev_month=date('M',$prev_date);
-$cur_prev_month_days=date('t',$prev_date);
-
-$cur_first_day=date("w", strtotime("$cur_year-$cur_month-01"));
-$cur_days_in_month=date("t",strtotime("$cur_year-$cur_month"));
+$date_obj=new calendardates($cur_date);
 
 if (!isset($myObj))
     $myObj = new stdClass();
 
-$myObj->prev_days = $cur_prev_month_days;
-$myObj->first_day = $cur_first_day;
-$myObj->days = $cur_days_in_month;
-$myObj->prev_month = date('M Y',$prev_date);
-$myObj->day = $cur_day;
-$myObj->month = $cur_month;
-$myObj->year = $cur_year;
-$myObj->next_month = date('M Y',$next_date);
 
-$myJSON = json_encode($myObj); //jsonify's an object
+$myObj->prev_days = $date_obj->prev_days;
+$myObj->first_day = $date_obj->first_day;
+$myObj->days = $date_obj->days;
+$myObj->prev_month = $date_obj->prev_month_year;
+$myObj->day = $date_obj->day;
+$myObj->month = $date_obj->month;
+$myObj->year = $date_obj->year;
+$myObj->next_month = "$date_obj->next_month_year";
+$myObj->firstshownday=date("M d Y",$date_obj->get_first_shown_day());
+$myObj->lastshownday=date("M d Y",$date_obj->get_last_shown_day());
+
+$myJSON = json_encode($date_obj); //jsonify's an object
 
 
 

@@ -45,9 +45,9 @@ function mycalendar(){
 		  this.set_prev_days(obj.prev_days);
 		  this.set_first_day(obj.first_day);
 		  this.set_max_days(obj.days);
-		  this.set_prev_month(obj.prev_month);
+		  this.set_prev_month(obj.prev_month_year);
 		  this.set_days(obj.month, obj.day, obj.year);
-		  this.set_next_month(obj.next_month);
+		  this.set_next_month(obj.next_month_year);
 	}
 	
 	this.show=function(){

@@ -6,13 +6,18 @@
 <html>
 <body>
 <?php
+require_once('./calendar/calendardates.php');
 
-$cur_date=time();
+$cur_date = new calendardates(strtotime("08/10/2019"));
 
-$cur_month=date('M',$cur_date);
-$cur_day=date("d",$cur_date);
-$cur_year=date("Y",$cur_date);
-echo strtotime("10/1/2018") . "<br />";
+
+//$cur_date=time();
+
+$cur_month=$cur_date->month;
+$cur_day=$cur_date->day;
+$cur_year=$cur_date->year;
+echo strtotime("11/1/2018") . "<br />";
+echo $cur_date->get_last_shown_day() . " <br />";
 ?>
 
 <div class="container">
@@ -84,25 +89,6 @@ function loadDoc(d) {
 	  }else{
 		  xhttp.send("date="+mycal.prev_month);
 	  }		
-	}
-
-function loadDocs() {
-	  var xhttp = new XMLHttpRequest();
-	  xhttp.onreadystatechange = function() {
-	    if (this.readyState == 4 && this.status == 200) {
-		  
-	     // document.getElementById("ajax").innerHTML = this.responseText;
-	      var obj = JSON.parse(this.responseText);	
-			
-		  mycal.set_all(obj);
-		  
-		  document.getElementById('p1').innerHTML = mycal.show();
-		  document.getElementById('current_month').innerHTML=mycal.month + "  " +mycal.year
-	    }
-	  };
-	  xhttp.open("POST", "calendarpart.php", true);
-	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	  xhttp.send("date="+mycal.prev_month);
 	}
 
 
