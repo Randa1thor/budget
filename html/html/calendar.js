@@ -8,7 +8,7 @@ function mycalendar(){
 	this.prev_month;
 	this.prev_days;
 	this.next_month;
-	this.cal_builder=new calendarbasichtml();
+	this.cal_builder=new calendarbodybasichtml();
 	
 	this.set_days=function(month, day, year){
 		this.month=month;
@@ -16,17 +16,22 @@ function mycalendar(){
 		this.year=year;		
 	}
 	
+	
+	//variables requiring a number must convert from parseInt  begin:
+	
 	this.set_first_day=function(first_day){
-		this.first_day=first_day;//numeric to fit array Sun(0)-Sat(6)
+		this.first_day=parseInt(""+first_day);//numeric to fit array Sun(0)-Sat(6)
 	}
 	
 	this.set_prev_days=function(prev_days){
-		this.prev_days=prev_days;
+		this.prev_days=parseInt(""+prev_days);
 	}
 	
 	this.set_max_days=function(num_of_days){
-		this.num_of_days=num_of_days;
+		this.num_of_days=parseInt(""+num_of_days);
 	}
+	
+	// :end
 	
 	this.set_prev_month=function(prev_month){
 		this.prev_month=prev_month;
@@ -36,7 +41,7 @@ function mycalendar(){
 		this.next_month=next_month;
 	}
 	
-	this.set_all=function(obj){//must have all variables
+	this.set_all=function(obj){//must have all variables  could make a try funct takes default values
 		  this.set_prev_days(obj.prev_days);
 		  this.set_first_day(obj.first_day);
 		  this.set_max_days(obj.days);
@@ -104,7 +109,7 @@ function mycalendar(){
 
 
 
-function calendarbasichtml(){
+function calendarbodybasichtml(){
 	
 	this.pre_calendar;
 	this.pre_week;

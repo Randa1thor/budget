@@ -8,35 +8,18 @@
 <?php
 
 $cur_date=time();
-$prev_date=strtotime('-1 month', $cur_date);
-$next_date=strtotime('+1 month', $cur_date);
-
-//echo date('l M d Y', $cur_date);
 
 $cur_month=date('M',$cur_date);
 $cur_day=date("d",$cur_date);
 $cur_year=date("Y",$cur_date);
-
-
-$cur_prev_month=date('M',$prev_date);
-$cur_prev_month_days=date('t',$prev_date);
-
-$cur_first_day=date("w", strtotime("$cur_year-$cur_month-01"));
-$cur_days_in_month=date("t",strtotime("$cur_year-$cur_month"));
-
-
-
-
-
-
-
+echo strtotime("10/1/2018") . "<br />";
 ?>
 
 <div class="container">
 <div id="test"></div>
 <i class="prev-month fa fa-chevron-left fa-3x" onclick="loadDoc(-1)">[<]</i> <i class="next-month fa fa-chevron-right fa-3x" onclick="loadDoc(1)">[>]</i>
 <br>
-<div class="month-year text-center"><h3><?php echo "$cur_month  $cur_year";?></h3></div>
+<div class="month-year text-center"><h3><?php echo "$cur_month  $cur_day $cur_year";?></h3></div>
 
 	<div class="wrapper">
   <main>
@@ -66,21 +49,11 @@ $cur_days_in_month=date("t",strtotime("$cur_year-$cur_month"));
 
 <script>
 
-
+var someobj=<?php require_once('./calendarpart.php');?>
 
 var mycal = new mycalendar();
 
-mycal.set_days("10","11","2018");
-
-mycal.set_prev_month("<?php echo date('M Y',$prev_date);?>");
-
-mycal.set_prev_days(<?php echo $cur_prev_month_days;?>);
-
-mycal.next_month="<?php echo date('M Y',$next_date);?>";
-
-mycal.set_first_day(<?php echo $cur_first_day;?>);
-
-mycal.set_max_days(<?php echo $cur_days_in_month;?>);
+mycal.set_all(someobj.dates);
 
 mycal.cal_builder.set_day_html("<div class=\"calendar__day day\">","</div>");
 
@@ -94,10 +67,10 @@ function loadDoc(d) {
 	  xhttp.onreadystatechange = function() {
 	    if (this.readyState == 4 && this.status == 200) {
 		  
-	      //document.getElementById("ajax").innerHTML = this.responseText;
+	      document.getElementById("test").innerHTML = this.responseText;
 	      var obj = JSON.parse(this.responseText);	
 			
-		  mycal.set_all(obj);
+		  mycal.set_all(obj.dates);
 		  
 		  document.getElementById('p1').innerHTML = mycal.show();
 		  document.getElementById('current_month').innerHTML=mycal.month + "  " +mycal.year
