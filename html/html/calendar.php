@@ -18,6 +18,8 @@ $cur_day=$cur_date->day;
 $cur_year=$cur_date->year;
 echo strtotime("11/1/2018") . "<br />";
 echo $cur_date->get_last_shown_day() . " <br />";
+echo phpversion() . " <br />";
+
 ?>
 
 <div class="container">
@@ -33,7 +35,7 @@ echo $cur_date->get_last_shown_day() . " <br />";
         <div class="toggle__option">week</div>
         <div class="toggle__option toggle__option--selected">month</div>
       </div>
-      <div class="current-month" id="current_month">June 2016</div>
+      <div class="current-month" id="current_month"></div>
     </div>
     <div class="calendar">
       <div class="calendar__header">
@@ -65,6 +67,7 @@ mycal.cal_builder.set_day_html("<div class=\"calendar__day day\">","</div>");
 mycal.cal_builder.set_total_html("<div class=\"calendar__day day\">","</div>");
 
 document.getElementById('p1').innerHTML = mycal.show();
+document.getElementById('current_month').innerHTML=mycal.month + "  " +mycal.year
 
 
 function loadDoc(d) {
@@ -75,7 +78,7 @@ function loadDoc(d) {
 	      document.getElementById("test").innerHTML = this.responseText;
 	      var obj = JSON.parse(this.responseText);	
 			
-		  mycal.set_all(obj.dates);
+		  mycal.set_all(obj.dates);//object design is [{obj},{obj},{"dates":{}}]
 		  
 		  document.getElementById('p1').innerHTML = mycal.show();
 		  document.getElementById('current_month').innerHTML=mycal.month + "  " +mycal.year

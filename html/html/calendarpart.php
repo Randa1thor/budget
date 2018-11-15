@@ -10,26 +10,12 @@ if (!empty($_POST))
 
 $date_obj=new calendardates($cur_date);
 
-if (!isset($myObj))
-    $myObj = new stdClass();
-
-
-$myObj->prev_days = $date_obj->prev_days;
-$myObj->first_day = $date_obj->first_day;
-$myObj->days = $date_obj->days;
-$myObj->prev_month = $date_obj->prev_month_year;
-$myObj->day = $date_obj->day;
-$myObj->month = $date_obj->month;
-$myObj->year = $date_obj->year;
-$myObj->next_month = "$date_obj->next_month_year";
-$myObj->firstshownday=date("M d Y",$date_obj->get_first_shown_day());
-$myObj->lastshownday=date("M d Y",$date_obj->get_last_shown_day());
 
 $myJSON = json_encode($date_obj); //jsonify's an object
 
 
 
-echo "{\"dates\":" . $myJSON . "}";
+echo "{\"hello\":{\"2\":1, \"3\":2},\"dates\":" . $myJSON . "}";
 
 
 //find first day of printed week

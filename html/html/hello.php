@@ -8,12 +8,12 @@ Hello2
 echo "My first PHP script!";
 echo file_exists(__DIR__."/budget.sqlite3");
 $myPDO = new PDO("sqlite:".__DIR__."/budget.sqlite3");
-$result = $myPDO->query("SELECT Type FROM expense_type");
+$result = $myPDO->query("SELECT * FROM income_revolving INNER JOIN income_type ON income_revolving.Type_ID = income_type.ID");
 print "These are types\n";
 $rows=array();
     foreach($result as $row)
     {
-        $rows[] = $row['Type'];
+        $rows[] = $row;
     }
 echo "<br /> " . json_encode($rows);
 
