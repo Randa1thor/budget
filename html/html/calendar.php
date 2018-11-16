@@ -7,6 +7,7 @@
 <body>
 <?php
 require_once('./calendar/calendardates.php');
+require_once("./database/databaseconnect.php");
 
 $cur_date = new calendardates(strtotime("08/10/2019"));
 
