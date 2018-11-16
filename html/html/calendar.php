@@ -1,7 +1,7 @@
 <!DOCTYPE html>
  <head>
-<link rel="stylesheet" type="text/css" href="calendar.css">
-<script src="calendar.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="./calendar/calendar.css">
+<script src="./calendar/calendar.js" type="text/javascript"></script>
 </head> 
 <html>
 <body>
@@ -9,17 +9,9 @@
 require_once('./calendar/calendardates.php');
 require_once("./database/databaseconnect.php");
 
-$cur_date = new calendardates(strtotime("08/10/2019"));
 
 
-//$cur_date=time();
 
-$cur_month=$cur_date->month;
-$cur_day=$cur_date->day;
-$cur_year=$cur_date->year;
-echo strtotime("11/1/2018") . "<br />";
-echo $cur_date->get_last_shown_day() . " <br />";
-echo phpversion() . " <br />";
 
 ?>
 
@@ -27,7 +19,7 @@ echo phpversion() . " <br />";
 <div id="test"></div>
 <i class="prev-month fa fa-chevron-left fa-3x" onclick="loadDoc(-1)">[<]</i> <i class="next-month fa fa-chevron-right fa-3x" onclick="loadDoc(1)">[>]</i>
 <br>
-<div class="month-year text-center"><h3><?php echo "$cur_month  $cur_day $cur_year";?></h3></div>
+<div class="month-year text-center"><h3><?php echo date("M d Y");?></h3></div>
 
 	<div class="wrapper">
   <main>
@@ -57,7 +49,7 @@ echo phpversion() . " <br />";
 
 <script>
 
-var someobj=<?php require_once('./calendarpart.php');?>
+var someobj=<?php require_once('./calendar/calendarpart.php');?>
 
 var mycal = new mycalendar();
 
@@ -85,7 +77,7 @@ function loadDoc(d) {
 		  document.getElementById('current_month').innerHTML=mycal.month + "  " +mycal.year
 	    }
 	  };
-	  xhttp.open("POST", "calendarpart.php", true);
+	  xhttp.open("POST", "./calendar/calendarpart.php", true);
 	  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
 	  if(d>0){
