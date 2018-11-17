@@ -1,5 +1,6 @@
 <!DOCTYPE html>
  <head>
+ <script src="./utilities.js" type="text/javascript"></script>
  <script src="./expenses.js" type="text/javascript"></script>
  </head>
  <html>
@@ -18,11 +19,12 @@
  <input type="checkbox" value=false id="editchecked" onchange="editexpense()">Edit
  
  <div style="display: none;" id="editexpensediv">
- 	<div>
+ 	<div id="editexpensecontainer">
  		Name <input name="expensename">
  		Start Date <input name="startdate">
  		Due Date <input name="startdate">
  		Interium Date <input name="startdate">(Days)
+ 		End Date <input name="enddate">
  		<input type="hidden" value="" id="expenseid">
  	</div>
  </div>
@@ -53,7 +55,12 @@
  <script>
 
  	document.getElementById("expensetypes").selectedIndex="0";
-	function editexpense(a){
+
+
+
+
+	function editexpense(){
+
 		if(document.getElementById("expensetypes").value=="new" || document.getElementById("editchecked").checked ==true){
 			document.getElementById("editexpensediv").style.display="block";
 		}else{
@@ -61,6 +68,8 @@
 		}
 
 	}
+
+	
 
 
 
@@ -71,12 +80,12 @@
 			  
 		      console.log( this.responseText);
 		      var obj = JSON.parse(this.responseText);	
-
-			  var exphtml=new expenseshtml();
+				
+			  var exp=new expenseshandler();
+			  exp.fillExpenses(obj.types);
+			  exp.fillAccounts(obj.accounts);
+			  exp.buildhtml("expensetypes", "accounttypes");
 			  
-
-			  exphtml.buildoptions(obj.types, "expensetypes", true);
-			  exphtml.buildoptions(obj.accounts, "accounttypes",false);
 			  
 		    }
 		  };
