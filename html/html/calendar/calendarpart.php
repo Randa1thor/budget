@@ -1,6 +1,6 @@
 <?php
 
-require_once("./calendar/calendardates.php");
+require_once(__DIR__ ."/calendardates.php");
 
 $cur_date=time();
 if (!empty($_POST))

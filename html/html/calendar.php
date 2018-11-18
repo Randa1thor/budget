@@ -5,16 +5,6 @@
 </head> 
 <html>
 <body>
-<?php
-require_once('./calendar/calendardates.php');
-require_once("./database/databaseconnect.php");
-
-
-
-
-
-?>
-
 <div class="container">
 <div id="test"></div>
 <i class="prev-month fa fa-chevron-left fa-3x" onclick="loadDoc(-1)">[<]</i> <i class="next-month fa fa-chevron-right fa-3x" onclick="loadDoc(1)">[>]</i>
@@ -70,7 +60,7 @@ function loadDoc(d) {
 		  
 	      document.getElementById("test").innerHTML = this.responseText;
 	      var obj = JSON.parse(this.responseText);	
-			
+		  	
 		  mycal.set_all(obj.dates);//object design is [{obj},{obj},{"dates":{}}]
 		  
 		  document.getElementById('p1').innerHTML = mycal.show();
@@ -85,7 +75,7 @@ function loadDoc(d) {
 	  }else{
 		  xhttp.send("date="+mycal.prev_month);
 	  }		
-	}
+}
 
 
 

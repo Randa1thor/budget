@@ -1,6 +1,6 @@
 
 
-function expense(){
+function transaction(){
 	this.id;
 	this.startdate;
 	this.enddate;
@@ -9,10 +9,10 @@ function expense(){
 	this.duedate;
 	this.interimdays;
 	this.type;
-	this.withdrawlaccount;//may change to affected account
+	this.affectedaccount;//may change to affected account
 	this.type_id;
 	
-	this.createExpense=function(obj){
+	this.createTransaction=function(obj){
 		
 		this.id=obj.ID;
 		//idea is to have both revolving and type not sure if I should relation actuals to type or revolving
@@ -21,10 +21,10 @@ function expense(){
 		this.enddate=obj.End_Date;
 		this.amount=obj.Amount;
 		this.lastactual=obj.lastactual;
-		this.duedate=obj.Due_Date;
+		this.dueday=obj.Due_Day;
 		this.interimdays=obj.Interim_Days;
 		this.type=obj.Type;
-		this.withdrawlaccountid=obj.Withdrawl_Account_ID;
+		this.affectedaccountid=obj.Affected_Account_ID;
 		
 		if(obj.Type_ID){
 			this.type_id=obj.Type_ID;			
@@ -51,14 +51,14 @@ function account(){
 	}
 }
 
-function expenseshtml(){	
+function transactionshtml(){	
 	
-	this.buildoptions =function(list, listid, hasnew){
+	this.buildoptions =function(list, listid, hasnew, type){
 		
 		var options="";
 		
 		for(var k in list){
-			options+=this.buildoption(list[k]);
+			options+=this.buildoption(list[k],type);
 		}
 		
 		if(hasnew)
@@ -67,30 +67,36 @@ function expenseshtml(){
 		document.getElementById(listid).innerHTML=options;		
 	}
 	
-	this.buildoption=function(item){
+	this.buildoption=function(item, type){
 		console.log(JSON.stringify(item));
-		return "<option id=\"type" + item.type_id + "\" value=\"" + item.type + "\">" + item.type + "</option>";
-		
-		
+		return "<option  value=\"" + type + item.type_id + "\">" + item.type + "</option>";	
 	}	
+	
+	
+	this.buildEditError=function(id, err){
+		
+		document.getElementById(id).innerHTML=err;
+	}
+	
 	
 }
 
 
 
 
-function expenseshandler(){
+function transactionhandler(){
 	
 	this.expenses;
+	this.incomes;
 	this.accounts;
-	this.exphtml=new expenseshtml();
+	this.transhtml=new transactionshtml();
 	
 	//takes an arrayed json due to db obj json.encode
 	this.fillExpenses=function(list){
 		this.expenses=[];
 		for(var k in list){
-			var e=new expense();
-			e.createExpense(list[k]);
+			var e=new transaction();
+			e.createTransaction(list[k]);
 			this.expenses.push(e);
 		}
 	}
@@ -104,9 +110,57 @@ function expenseshandler(){
 		}
 	}
 	
+	this.fillIncomes=function(list){
+		this.incomes=[];
+		for(var k in list){
+			var e=new transaction();
+			e.createTransaction(list[k]);
+			this.incomes.push(e);
+		}
+	}
+	
+	
+	
 	this.buildhtml=function(expid, accountid){
-		this.exphtml.buildoptions(this.expenses,expid,true);
-		this.exphtml.buildoptions(this.accounts,accountid,false);
+		this.transhtml.buildoptions(this.expenses,expid,true, "expenses");
+		this.transhtml.buildoptions(this.accounts,accountid,false, "accounts");
+	}
+	
+	this.checkEditErrors=function(editerrorid, value){
+		var v=this.splitOptionValue(value);
+		obj=this.getTransaction(v[0],v[1]);
+		
+		var err="";
+		if(!obj.startdate)
+			err+=" no start date ";;
+		if(!obj.dueday || !obj.interimdays)
+			err+=" no cycle/day affected ";
+		if(!obj.amount)
+			err+= "no amount ";
+		
+		this.transhtml.buildEditError(editerrorid,err);
+	}
+	
+	this.getTransaction=function(type, id){
+		//could break out to 3 gets to make it more clear.
+		var check;
+		if(type=="incomes"){
+			check=this.incomes;
+		}else if(type=="expenses"){
+			check=this.expenses;
+		}else{
+			check=this.accounts;
+		}
+		
+		return check.find(o => o.type_id === id);
+		
+	}
+	
+	this.splitOptionValue=function(value){
+		//regex return array[2] with [type][id]
+		var re = /(\d+)/;
+		return value.split(re);
+		
 	}
 	
 	
