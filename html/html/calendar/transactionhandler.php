@@ -1,5 +1,5 @@
 <?php 
-
+//Calendar transaction handler.
 class transaction_handler{
     
     var $transactions=array();

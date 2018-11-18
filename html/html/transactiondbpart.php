@@ -2,6 +2,21 @@
 
 require_once("./database/databaseconnect.php");
 
+
+//take post if post get if new type or record or both
+if (!empty($_POST))
+{
+    if($_POST['action']=="update"){
+        
+    }
+    
+    if($_POST['action']=="new"){
+        
+    }
+}
+
+
+
 $sql="SELECT e.*, etype.Type, etype.ID as ET_Type_ID
     FROM expense_type as etype 
     LEFT JOIN expense_revolving as e ON e.Type_ID=etype.ID";

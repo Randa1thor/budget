@@ -12,7 +12,7 @@
  
  <div class="typelist">Types</div>
  
- <select id="transtypes" onchange="edittrans()">
+ <select id="types" onchange="edittrans()">
  	<option value="apple">Apple</option>
  	<option value="new">New</option>
  </select>
@@ -20,12 +20,12 @@
  
  <div style="display: none;" id="edittransdiv">
  	<div id="edittranscontainer">
- 		Name <input name="transname">
+ 		Name <input name="name">
  		Start Date <input name="startdate">
  		Due Date <input name="dueday">
  		Interium Date <input name="interim">(Days)
  		End Date <input name="enddate">
- 		<input type="hidden" value="" id="transid">
+ 		<input type="hidden" value="" id="tid">
  	</div>
  </div>
  
@@ -58,7 +58,19 @@
 	var transhandler=new transactionhandler();
 	var transtypes = document.getElementById("transtypes");
 	
+	function form(){		
+		names=["types","name","startdate","dueday","interim","enddate","tid","accounttypes", "amount","date"];
 
+
+		insertNew(){ 
+			
+		}
+
+
+		
+	}
+
+	
 	function edittrans(){
 		clearEdit();
 

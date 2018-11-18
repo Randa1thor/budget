@@ -44,11 +44,11 @@ echo "<br />";
 echo "<br />";
 echo "<br />Here starts the new stuff<br />";
 
-$sql = ('SELECT ' .
-    'i.id, i.Start_Date, i.Due_Day, i.Interim_Days, i.Last_Actual, i.End_Date, i.Amount, it.Type ' .
-    'FROM income_revolving  as i ' .
-    'INNER JOIN income_type as it ON i.Type_ID = it.ID '.
-    'WHERE (i.End_Date >= :fds OR i.End_Date IS NULL) AND (i.Last_Actual < :lds OR i.Last_Actual IS NULL)' );
+$sql = ("SELECT 
+    i.id, i.Start_Date, i.Due_Day, i.Interim_Days, i.Last_Actual, i.End_Date, i.Amount, it.Type 
+    FROM income_revolving  as i 
+    INNER JOIN income_type as it ON i.Type_ID = it.ID 
+    WHERE (i.End_Date >= :fds OR i.End_Date IS NULL) AND (i.Last_Actual < :lds OR i.Last_Actual IS NULL)" );
 
 $transaction_handler->get_revolving($sql,$fds, $lds, $pdo);
 echo json_encode($transaction_handler->transactions);echo "<br />";
