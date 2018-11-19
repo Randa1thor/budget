@@ -5,19 +5,19 @@
  </head>
  <html>
  <body>
- 
- <div class="title">Expenses</div>
- 
+
+ <div>Expenses</div>
+
  <div id="feedbackdiv"></div>
- 
+
  <div class="typelist">Types</div>
- 
+
  <select id="types" onchange="edittrans()">
  	<option value="apple">Apple</option>
  	<option value="new">New</option>
  </select>
  <input type="checkbox" value=false id="editchecked" onchange="edittrans()">Edit<div id="transactionerror"></div>
- 
+
  <div style="display: none;" id="edittransdiv">
  	<div id="edittranscontainer">
  		Name <input name="name">
@@ -25,52 +25,42 @@
  		Due Date <input name="dueday">
  		Interium Date <input name="interim">(Days)
  		End Date <input name="enddate">
- 		<input type="hidden" value="" id="tid">
+ 		<input type="hidden" value="0" name="tid">
  	</div>
  </div>
- 
- 
- 
+
+
+
  <div class="accountlist">Accounts</div>
  <select id="accounttypes">
  	<option value="apple">Apple</option>
  	<option value="orange">Orange</option>
  </select>
 
- 
- 
+
+
  <div>Amount <input id="amount" name="amount"></div>
  <div>Date <input id="date" name="date"></div>
 
  <div><input type="submit" value="update" onclick="updateTransactions()"></div>
- 
- 
- 
- 
- 
- 
- 
- 
- 
+
+
+
+
+
+
+
+
+
  <script>
 	//really need to create a function to handle all of this so that eliminates global variables.
- 	document.getElementById("transtypes").selectedIndex="0";
+ 	document.getElementById("types").selectedIndex="0";
 	var transhandler=new transactionhandler();
-	var transtypes = document.getElementById("transtypes");
-	
-	function form(){		
-		names=["types","name","startdate","dueday","interim","enddate","tid","accounttypes", "amount","date"];
+	var transtypes = document.getElementById("types");
 
 
-		insertNew(){ 
-			
-		}
 
 
-		
-	}
-
-	
 	function edittrans(){
 		clearEdit();
 
@@ -80,11 +70,11 @@
 			if(document.getElementById("transtypes").value=="new")
 				return;
 			editNotSaved();
-			
+
 
 
 		}else{
-			
+
 			document.getElementById("edittransdiv").style.display="none";
 			checkSelected();
 		}
@@ -98,7 +88,7 @@
 
 
 	function checkSelected(){
-		
+
 		  var str = transtypes.options[transtypes.selectedIndex].value;
 		  transhandler.checkEditErrors("transactionerror",str);
 	}
@@ -110,10 +100,11 @@
 
 
 	function updateTransactions(){
-		
+      var f=new form();
+      f.insertNew();
 	}
 
-	
+
 
 
 
@@ -121,26 +112,26 @@
 		  var xhttp = new XMLHttpRequest();
 		  xhttp.onreadystatechange = function() {
 		    if (this.readyState == 4 && this.status == 200) {
-			  
+
 		      console.log( this.responseText);
-		      var obj = JSON.parse(this.responseText);	
-				
-			  
+		      var obj = JSON.parse(this.responseText);
+
+
 			  transhandler.fillExpenses(obj.expenses);
 			  transhandler.fillAccounts(obj.accounts);
 			  transhandler.fillIncomes(obj.incomes);
-			  transhandler.buildhtml("transtypes", "accounttypes");
+			  transhandler.buildhtml("types", "accounttypes");
 
 			  checkSelected();
-			  
-			  
+
+
 		    }
 		  };
 		  xhttp.open("POST", "./transactiondbpart.php", true);
 		  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	      xhttp.send("");
 	      console.log("sending");
-		  		
+
 	}
 
 	loadDoc();
