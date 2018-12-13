@@ -1,0 +1,108 @@
+<div class="frm-block-outer" style="width:70%;">
+    <div class="headinginner">
+        <h3 id="heading" style="margin: 0px;"></h3>
+    </div>
+    <div class="frm-wrapper" style="width: 980px;">
+        <form:form action="${pageContext.request.contextPath}/transport/addexpense" modelAttribute="expenseSubGroup" id="frmLogin" method="post" commandName="expenseSubGroup">
+            <div style="float: left;">
+                <fieldset class="mem-field-set">
+                    <legend>Add an Expense</legend>
+                    <form:input path="id" id="id" type="hidden" class="txt-field" />
+
+                    <div class="nmem-input-pair mandatory">
+                        <label>Date: <span class="req_field">*</span></label>
+                        <div class="row-field">
+                            <form:input path="expense.expense_date" id="expense_date" class="txt-field date-field-fy"/>
+                            <form:errors path="expense.expense_date" class="field-error"></form:errors>
+                        </div>
+                    </div>
+
+                    <div class="nmem-input-pair mandatory">
+                        <label>Account Type:<span class="req_field">*</span></label>
+                        <div class="row-field">
+                            <form:select path="expense.id" id="expense_id" style="height: 24px;width:150px !important" class="chosen-select-width" tabindex="1">
+                                <form:option value="" label="Select Account Name" />
+                                <form:options items="${groupName}"/>
+                            </form:select>
+                            <form:errors path="expense.name" class="field-error"></form:errors>
+                        </div>
+                    </div>
+
+                    <div class="nmem-input-pair mandatory">
+                        <label>Through:<span class="req_field">*</span></label>
+                        <div class="row-field">
+                            <form:select path="expense.partner_id"  style="height: 24px;width:150px !important" id="partner_id" class="chosen-select-width" tabindex="1">
+                                <form:option value="" label="Select" />
+                                <form:options items="${partners}"/>
+                            </form:select>
+                            <form:errors path="expense.partner_id" class="field-error"></form:errors>
+                        </div>
+                    </div>
+
+                    <fieldset>
+                        <hr>
+                        <div style="margin-left: 100px;" id="expenseDiv">
+
+                            <div style="float: left;width: 685px;margin-top: 10px;margin-bottom: 10px;">
+                                <div style="float: left; width: 200px; text-align: center;">
+                                    <label>Expense</label>
+                                </div>
+
+                                <div style="float: left; width: 100px; text-align: center;">
+                                    <label>Cost</label>
+                                </div>
+
+                                <div style="float: left; width: 300px; text-align: center;">
+                                    <label>Description</label>
+                                </div>
+                            </div>
+                            <div style="width:215px; height: 24px;float:left;padding-right:10px;">
+                                <form:select path="name"  style="height: 24px;width:150px !important" class="chosen-select-width" tabindex="1">
+                                    <form:option value="" label="Select Expense Name" />
+                                </form:select>
+                            </div>
+                            <div style="width:55px; height: 24px;float:left;padding-right:10px;">
+                                <form:input path="payment" id="payment" class="txt-field number-field" maxlength="6" style="width:50px;" onfocusout="calTotalCost(0)" onKeyDown="if(event.keyCode==13) calTotalCost(0)"/>
+                            </div>
+                            <div style="width:305px; height: 24px;float:left;">
+                                <form:textarea path="remark" class="txt-field" style="width:300px;"></form:textarea>
+                            </div>
+                            <div style="width:50px; height: 24px;float:left;">
+                                <a onclick="addExpense();"><input title="Add" class="jqueryaddrow" type="button"  style="font-size: 10px; margin-top: -1px; margin-left: 20px;"></a>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <fieldset>
+                        <hr>
+                        <div class="nmem-input-pair mandatory">
+                            <label>Total Payment:<span class="req_field">*</span></label>
+                            <div class="row-field">
+                                <form:input path="expense.final_payment" id="final_payment" class="txt-field number-field" maxlength="6" style="width:50px;"/>
+                                <form:errors path="expense.final_payment" class="field-error"></form:errors>
+                            </div>
+                        </div>
+
+                        <div class="nmem-input-pair">
+                            <label>Remark:<span class="req_field"></span></label>
+                            <div class="row-field">
+                                <form:textarea path="expense.remark" class="txt-field"></form:textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+                </fieldset>
+            </div>
+
+            <div class="mem-input-pair" style="margin-left: 184px;">
+                <div class="login-btn gapl-110">
+                    <a href="${pageContext.request.contextPath}/transport/expense">
+                        <input type="button" value="Cancel" class="btn-grey" style="width:105px;" />
+                    </a>
+                </div>
+                <div class="login-btn">
+                    <input name="updatebtn" id="updatebtn" type="submit" value="Save" class="btn-login" style="width:105px;" />
+                </div>
+            </div>
+        </form:form>
+    </div>
+</div>
