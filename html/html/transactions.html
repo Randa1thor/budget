@@ -1,9 +1,10 @@
 <!DOCTYPE html>
- <head>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
  <script src="./utilities.js" type="text/javascript"></script>
  <script src="./transactions.js" type="text/javascript"></script>
  </head>
- <html>
  <body>
 
  <div>Expenses</div>
@@ -23,7 +24,7 @@
  		Name <input name="name">
  		Start Date <input name="startdate">
  		Due Date <input name="dueday">
- 		Interium Date <input name="interim">(Days)
+ 		Interium Date <input name="interium">(Days)
  		End Date <input name="enddate">
  		<input type="hidden" value="0" name="tid">
  	</div>
@@ -39,8 +40,8 @@
 
 
 
- <div>Amount <input id="amount" name="amount"></div>
- <div>Date <input id="date" name="date"></div>
+ <div>Amount <input name="amount"></div>
+ <div>Date <input name="date"></div>
 
  <div><input type="submit" value="update" onclick="updateTransactions()"></div>
 
@@ -54,24 +55,26 @@
 
  <script>
 	//really need to create a function to handle all of this so that eliminates global variables.
- 	document.getElementById("types").selectedIndex="0";
-	var transhandler=new transactionhandler();
-	var transtypes = document.getElementById("types");
 
+	var transhandler=new transactionhandler();
+	var transtypes = document.getElementById("types");//global variables are bad should put into an object
+
+  var frm=new form();
 
 
 
 	function edittrans(){
 		clearEdit();
 
-		if(document.getElementById("transtypes").value=="new" || document.getElementById("editchecked").checked ==true){
-
+		if(document.getElementById("types").value=="new" || document.getElementById("editchecked").checked ==true){
+      //check if new or editing
 			document.getElementById("edittransdiv").style.display="block";
-			if(document.getElementById("transtypes").value=="new")
+      //show editing div if new leave blank
+			if(document.getElementById("types").value=="new")
 				return;
 			editNotSaved();
 
-
+      frm.setEditValues(transhandler);
 
 		}else{
 
@@ -95,7 +98,8 @@
 
 	function clearEdit(){
 		document.getElementById("transactionerror").innerHTML="";
-		clearChildren(document.getElementById("edittranscontainer"));
+    //::TODO:: replace clearChildren with form edit clear so that location of elements is not important.
+		clearChildren(document.getElementById("edittranscontainer"));//lazy <~~ clear
 	}
 
 
@@ -124,17 +128,20 @@
 
 			  checkSelected();
 
+        edittrans();
 
 		    }
 		  };
 		  xhttp.open("POST", "./transactiondbpart.php", true);
 		  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	      xhttp.send("");
+        //var t={"action":"something","hello":"world"}
+        xhttp.send();
 	      console.log("sending");
 
 	}
 
 	loadDoc();
+
 
 
 

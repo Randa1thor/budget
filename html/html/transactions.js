@@ -8,7 +8,7 @@ function transaction () {
 	this.duedate;
 	this.interimdays;
 	this.type;
-	this.affectedaccount;//may change to affected account
+	this.affectedaccountid;
 	this.type_id;
 
 	this.createTransaction = function (obj){
@@ -19,7 +19,7 @@ function transaction () {
 		this.startdate=obj.Start_Date;
 		this.enddate=obj.End_Date;
 		this.amount=obj.Amount;
-		this.lastactual=obj.lastactual;
+		this.lastactual=obj.Last_Actual_ID;
 		this.dueday=obj.Due_Day;
 		this.interimdays=obj.Interim_Days;
 		this.type=obj.Type;
@@ -30,9 +30,6 @@ function transaction () {
 		}else{
 			this.type_id=obj.ET_Type_ID
 		}
-
-
-
 
 	}
 
@@ -120,7 +117,7 @@ function transactionhandler(){
 
 
 
-	this.buildhtml=function(expid, accountid){
+	this.buildhtml=function(expid, accountid, incid){
 		this.transhtml.buildoptions(this.expenses,expid,true, "expenses");
 		this.transhtml.buildoptions(this.accounts,accountid,false, "accounts");
 	}
@@ -162,8 +159,6 @@ function transactionhandler(){
 
 	}
 
-
-
 }
 
 
@@ -172,11 +167,11 @@ function transactionhandler(){
 function form(){
 	//built with select's at end for lazy programming
 	this.selectnames=["types","accounttypes"];
-	this.inputnames=["name","startdate","dueday","interim","enddate","tid", "amount","date"];
+	this.inputnames=["name","startdate","dueday","interium","enddate","tid", "amount","date"];
 
 	this.insertNew=function(){
 
-		console.log(JSON.stringify(this.getInputValues()) + JSON.stringify(this.getSelectValues()));
+		console.log(JSON.stringify(Object.assign(this.getInputValues(),this.getSelectValues())));
 	}
 
 	this.getInputValues = function (){
@@ -190,11 +185,55 @@ function form(){
 		return result;
 	}
 
-	this.getSelectValues = function (){
+	this.setEditValues = function(transhandler){  //not the best way it would be best to define each needed element
+		//will need to upgrade this to use array names to make it more modular
+		var e = document.getElementById(this.selectnames[0]);
+		var id = e.options[e.selectedIndex].value;
+		result=transhandler.splitOptionValue(id);
+
+
+		trans=transhandler.getTransaction(result[0],result[1]);
+
+
+
+		document.getElementsByName("name")[0].value=trans.type;
+		document.getElementsByName("startdate")[0].value=trans.startdate;
+		document.getElementsByName("dueday")[0].value=trans.dueday;
+		document.getElementsByName("interium")[0].value=trans.interimdays;
+		document.getElementsByName("enddate")[0].value=trans.enddate;
+		document.getElementsByName("tid")[0].value=trans.id;
+
+		this.selectAccount(trans.affectedaccountid);
+
+		document.getElementsByName("amount")[0].value=trans.amount;
+
+			 //theres a better way with input node list couldn't get it to work
+			console.log(transhandler.getTransaction(result[0],result[1]));
+	}
+
+
+	this.selectAccount = function(id){
+		if(id==0){
+			return;
+		}
+		var sel=document.getElementById("accounttypes");
+		var opts = sel.options;
+		var val="accounts"+id;
+		for (var opt, j = 0; opt = opts[j]; j++) {
+				if (opt.value == val) {
+					sel.selectedIndex = j;
+					break;
+				}
+			}
+	}
+
+	this.getSelectValues = function (){//might want to break out to individual select retrieval
 		var result={};
 		for (var i = 0; i < this.selectnames.length; i++)
 		{
-				result[this.selectnames[i]]=transhandler.splitOptionValue(document.getElementById(this.selectnames[i])[0].value);
+			var e = document.getElementById(this.selectnames[i]);
+			var id = e.options[e.selectedIndex].value;
+			result[this.selectnames[i]]=transhandler.splitOptionValue(id);
 		}
 
 		return result;
