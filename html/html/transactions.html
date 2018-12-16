@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+this.transactionhandler<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
  <script src="./utilities.js" type="text/javascript"></script>
  <script src="./transactions.js" type="text/javascript"></script>
+ <script src="./transactionshtml.js" type="text/javascritp"></script>
  </head>
  <body>
 
@@ -24,7 +25,7 @@
  		Name <input name="name">
  		Start Date <input name="startdate">
  		Due Date <input name="dueday">
- 		Interium Date <input name="interium">(Days)
+ 		Interim Date <input name="interim">(Days)
  		End Date <input name="enddate">
  		<input type="hidden" value="0" name="tid">
  	</div>
@@ -56,7 +57,7 @@
  <script>
 	//really need to create a function to handle all of this so that eliminates global variables.
 
-	var transhandler=new transactionhandler();
+
 	var transtypes = document.getElementById("types");//global variables are bad should put into an object
 
   var frm=new form();
@@ -74,7 +75,7 @@
 				return;
 			editNotSaved();
 
-      frm.setEditValues(transhandler);
+      frm.setEditValues();
 
 		}else{
 
@@ -93,7 +94,7 @@
 	function checkSelected(){
 
 		  var str = transtypes.options[transtypes.selectedIndex].value;
-		  transhandler.checkEditErrors("transactionerror",str);
+		  frm.checkEditErrors("transactionerror",str);
 	}
 
 	function clearEdit(){
@@ -105,42 +106,48 @@
 
 	function updateTransactions(){
       var f=new form();
-      f.insertNew();
+      var s=f.insertNew();
+      s["action"]="update";
+      console.log(s);
+      loadDoc(JSON.stringify(s));
+
 	}
 
 
+  function firsttime(data){
+    console.log( data);
+    var obj = JSON.parse(data);
+
+    frm.fillTransactions(obj.accounts, obj.incomes, obj.expenses);
+
+    frm.buildhtml("types", "accounttypes");
+
+    checkSelected();
+
+    edittrans();
+
+  }
+
+  function updateCallback(data){}
 
 
-
-	function loadDoc() {
+	function loadDoc(data, callback) {
 		  var xhttp = new XMLHttpRequest();
 		  xhttp.onreadystatechange = function() {
 		    if (this.readyState == 4 && this.status == 200) {
 
-		      console.log( this.responseText);
-		      var obj = JSON.parse(this.responseText);
-
-
-			  transhandler.fillExpenses(obj.expenses);
-			  transhandler.fillAccounts(obj.accounts);
-			  transhandler.fillIncomes(obj.incomes);
-			  transhandler.buildhtml("types", "accounttypes");
-
-			  checkSelected();
-
-        edittrans();
+          callback(this.responseText);
 
 		    }
 		  };
 		  xhttp.open("POST", "./transactiondbpart.php", true);
-		  xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        //var t={"action":"something","hello":"world"}
-        xhttp.send();
+		  xhttp.setRequestHeader("Content-type", "application/json");
+        xhttp.send(data);
 	      console.log("sending");
 
 	}
 
-	loadDoc();
+	loadDoc("",firsttime);
 
 
 

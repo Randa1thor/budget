@@ -47,35 +47,6 @@ function account(){
 	}
 }
 
-function transactionshtml(){
-
-	this.buildoptions =function(list, listid, hasnew, type){
-
-		var options="";
-
-		for(var k in list){
-			options+=this.buildoption(list[k],type);
-		}
-
-		if(hasnew)
-		options+="<option value=\"new\">New</option>"
-
-		document.getElementById(listid).innerHTML=options;
-	}
-
-	this.buildoption=function(item, type){
-		console.log(JSON.stringify(item));
-		return "<option  value=\"" + type + item.type_id + "\">" + item.type + "</option>";
-	}
-
-
-	this.buildEditError=function(id, err){
-
-		document.getElementById(id).innerHTML=err;
-	}
-
-
-}
 
 
 
@@ -85,7 +56,7 @@ function transactionhandler(){
 	this.expenses;
 	this.incomes;
 	this.accounts;
-	this.transhtml=new transactionshtml();
+	//this.transhtml=new transactionshtml();
 
 	//takes an arrayed json due to db obj json.encode
 	this.fillExpenses=function(list){
@@ -117,25 +88,7 @@ function transactionhandler(){
 
 
 
-	this.buildhtml=function(expid, accountid, incid){
-		this.transhtml.buildoptions(this.expenses,expid,true, "expenses");
-		this.transhtml.buildoptions(this.accounts,accountid,false, "accounts");
-	}
 
-	this.checkEditErrors=function(editerrorid, value){
-		var v=this.splitOptionValue(value);
-		obj=this.getTransaction(v[0],v[1]);
-
-		var err="";
-		if(!obj.startdate)
-			err+=" no start date ";;
-		if(!obj.dueday || !obj.interimdays)
-			err+=" no cycle/day affected ";
-		if(!obj.amount)
-			err+= "no amount ";
-
-		this.transhtml.buildEditError(editerrorid,err);
-	}
 
 	this.getTransaction=function(type, id){
 		//could break out to 3 gets to make it more clear.
@@ -158,89 +111,5 @@ function transactionhandler(){
 		return value.split(re);
 
 	}
-
-}
-
-
-
-
-function form(){
-	//built with select's at end for lazy programming
-	this.selectnames=["types","accounttypes"];
-	this.inputnames=["name","startdate","dueday","interium","enddate","tid", "amount","date"];
-
-	this.insertNew=function(){
-
-		var v=Object.assign(this.getInputValues(),this.getSelectValues());
-		console.log(v);
-		console.log(v.types[0]);
-	}
-
-	this.getInputValues = function (){
-		var result={};
-
-		for (var i = 0; i < this.inputnames.length; i++)
-		{
-				result[this.inputnames[i]]=document.getElementsByName(this.inputnames[i])[0].value;
-		}
-
-		return result;
-	}
-
-	this.setEditValues = function(transhandler){  //not the best way it would be best to define each needed element
-		//will need to upgrade this to use array names to make it more modular
-		var e = document.getElementById(this.selectnames[0]);
-		var id = e.options[e.selectedIndex].value;
-		result=transhandler.splitOptionValue(id);
-
-
-		trans=transhandler.getTransaction(result[0],result[1]);
-
-
-
-		document.getElementsByName("name")[0].value=trans.type;
-		document.getElementsByName("startdate")[0].value=trans.startdate;
-		document.getElementsByName("dueday")[0].value=trans.dueday;
-		document.getElementsByName("interium")[0].value=trans.interimdays;
-		document.getElementsByName("enddate")[0].value=trans.enddate;
-		document.getElementsByName("tid")[0].value=trans.id;
-
-		this.selectAccount(trans.affectedaccountid);
-
-		document.getElementsByName("amount")[0].value=trans.amount;
-
-			 //theres a better way with input node list couldn't get it to work
-			console.log(transhandler.getTransaction(result[0],result[1]));
-	}
-
-
-	this.selectAccount = function(id){
-		if(id==0){
-			return;
-		}
-		var sel=document.getElementById("accounttypes");
-		var opts = sel.options;
-		var val="accounts"+id;
-		for (var opt, j = 0; opt = opts[j]; j++) {
-				if (opt.value == val) {
-					sel.selectedIndex = j;
-					break;
-				}
-			}
-	}
-
-	this.getSelectValues = function (){//might want to break out to individual select retrieval
-		var result={};
-		for (var i = 0; i < this.selectnames.length; i++)
-		{
-			var e = document.getElementById(this.selectnames[i]);
-			var id = e.options[e.selectedIndex].value;
-			result[this.selectnames[i]]=transhandler.splitOptionValue(id);
-		}
-
-		return result;
-	}
-
-
 
 }
