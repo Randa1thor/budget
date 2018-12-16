@@ -171,7 +171,9 @@ function form(){
 
 	this.insertNew=function(){
 
-		console.log(JSON.stringify(Object.assign(this.getInputValues(),this.getSelectValues())));
+		var v=Object.assign(this.getInputValues(),this.getSelectValues());
+		console.log(v);
+		console.log(v.types[0]);
 	}
 
 	this.getInputValues = function (){

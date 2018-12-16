@@ -10,7 +10,8 @@ if (!empty($_POST))
     $sql="";
     if($v->{'action'}=="update"){
         if(empty($v['tid'])){
-          $sql = "INSERT INTO users (name, surname, sex) VALUES (:name, :surname, :sex)";
+          $sql = "INSERT INTO expense_revolving
+          (Due_Day, Start_Date, Interim_Days, ) VALUES (:name, :surname, :sex)";
 
         }
         else{
