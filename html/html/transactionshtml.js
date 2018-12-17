@@ -1,8 +1,12 @@
+
+
+
+
 function form(){
 	//built with select's at end for lazy programming
 	this.selectnames=["types","accounttypes"];
 	this.inputnames=["name","startdate","dueday","interim","enddate","tid", "amount","date"];
-  this.transactionhandler=transactionhandler();
+  this.transactionhandler=new transactionhandler();
 
 
   this.fillTransactions=function (accounts, incomes, expenses){
@@ -48,13 +52,19 @@ function form(){
 		var v=this.transactionhandler.splitOptionValue(value);
 		obj=this.transactionhandler.getTransaction(v[0],v[1]);
 
+
 		var err="";
 		if(!obj.startdate)
 			err+=" no start date ";;
 		if(!obj.dueday || !obj.interimdays)
 			err+=" no cycle/day affected ";
-		if(!obj.amount)
+		if(!obj.amount){
 			err+= "no amount ";
+      document.getElementsByName("amount")[0].value="";
+    }else{
+      document.getElementsByName("amount")[0].value=obj.amount.substr(0,obj.amount.length-2) + "." + obj.amount.substr(obj.amount.length-2);
+    }
+    document.getElementsByName("tid")[0].value=obj.tid;
 
 		this.buildEditError(editerrorid,err);
 	}

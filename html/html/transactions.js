@@ -1,6 +1,6 @@
 
 function transaction () {
-	this.id;
+	this.tid;
 	this.startdate;
 	this.enddate;
 	this.amount;
@@ -13,7 +13,7 @@ function transaction () {
 
 	this.createTransaction = function (obj){
 
-		this.id=obj.ID;
+		this.tid=obj.ID;
 		//idea is to have both revolving and type not sure if I should relation actuals to type or revolving
 		//sqlite does not have right or full joins so I'm thinking relationing to one table is best
 		this.startdate=obj.Start_Date;

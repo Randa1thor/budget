@@ -11,7 +11,7 @@ $v=(array) json_decode(file_get_contents("php://input",true)) ;
 
 if (!empty($v))
 {
-  
+    echo "recieved json \n";
     if($v['action']=="new"){
 
       //should test for duplicate names!  {feature}  db could refuse by making field unique still have to catch and display error
@@ -29,23 +29,36 @@ if (!empty($v))
 
     $sql="";//probably a bottle neck strings that resize are problems
     if($v["action"]=="update"){//needs to make sure there is even anything worth updating
-
+        echo "updating \n";
         if(empty($v["tid"])){
+
+          $v["descr"]=NULL;
+          $v["lastactual"]="";
+
+          echo "new insert\n";
           $sql = "INSERT INTO expense_revolving
-          (Due_Day, Start_Date, Interim_Days, Last_Actual_ID, Amount, Type_ID, Description, Currency_ID, Affected_Account_ID, End_Date)
-          VALUES (:dueday, :startdate, :interim, null, :amount, :types_id, :description, null, :accounttypes_id, :enddate)";
+          (Due_Day, Start_Date, Interim_Days, Last_Actual_ID, Amount, Type_ID, Description, Affected_Account_ID, End_Date)
+          VALUES (null,null,null,null,3000,3,null,1,null)";
         }
         else{
           $sql = "UPDATE expense_revolving
-          SET Due_Day=:duedate, Start_Date=:startdate, Interim_Days=:interim, Amount=:amount, Type_ID=:types_id, Description=:description, Affected_Account_ID=:affectedaccounttypes_id, End_Date=:enddate
+          SET Due_Day=:duedate, Start_Date=:startdate, Interim_Days=:interim, Amount=:amount, Type_ID=:types_id, Description=null, Affected_Account_ID=:affectedaccounttypes_id, End_Date=:enddate
           WHERE id=:tid";
         }
+        print_r($v);
 
-        $stmt= $dpo->prepare($sql);
-        $stmt->execute($v);
-        if(empty($v["tid"])){
-          $v["tid"] = $db->lastInsertId();
+        try {
+          $stmt= $pdo->prepare($sql);
+          $stmt->execute();
+        } catch (\PDOException $e) {
+             throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }
+
+
+        if(empty($v["tid"])){
+          $v["tid"] = $pdo->lastInsertId();
+        }
+        echo $v["tid"];
     }
     exit;
 }
