@@ -24,7 +24,7 @@ function form(){
 		}
 
 		if(hasnew)
-		options+="<option value=\"new\">New</option>"
+		options+="<option value=\"expenses0\">New</option>"
 
 		document.getElementById(listid).innerHTML=options;
 	}
@@ -100,17 +100,14 @@ function form(){
 		var id = e.options[e.selectedIndex].value;
 		result=this.transactionhandler.splitOptionValue(id);
 
-
-		trans=this.transactionhandler.getTransaction(result[0],result[1]);
-
-
+		trans=this.transactionhandler.getTransaction(result[0],result[1]);//checks for new in transaction.js
 
 		document.getElementsByName("name")[0].value=trans.type;
 		document.getElementsByName("startdate")[0].value=trans.startdate;
 		document.getElementsByName("dueday")[0].value=trans.dueday;
 		document.getElementsByName("interim")[0].value=trans.interimdays;
 		document.getElementsByName("enddate")[0].value=trans.enddate;
-		document.getElementsByName("tid")[0].value=1;//trans.id;
+		document.getElementsByName("tid")[0].value=trans.tid;
 
 		this.selectAccount(trans.affectedaccountid);
 
@@ -144,7 +141,10 @@ function form(){
 			var id = e.options[e.selectedIndex].value;
 			var s = this.transactionhandler.splitOptionValue(id);
 			result[this.selectnames[i]]=s[0];
-			result[this.selectnames[i]+"_id"]=s[1];
+			if(s.length<2)//always check length of array
+				result[this.selectnames[i]+"_id"]="";
+			else
+				result[this.selectnames[i]+"_id"]=s[1];
 
 		}
 

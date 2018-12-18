@@ -1,15 +1,17 @@
 
 function transaction () {
-	this.tid;
-	this.startdate;
-	this.enddate;
-	this.amount;
-	this.lastactual;
-	this.duedate;
-	this.interimdays;
-	this.type;
-	this.affectedaccountid;
-	this.type_id;
+
+	//not sure if initilizing to null is best but I need it for new transactions
+	this.tid="";
+	this.startdate="";
+	this.enddate="";
+	this.amount="";
+	this.lastactual="";
+	this.duedate="";
+	this.interimdays="";
+	this.type="";
+	this.affectedaccountid="";
+	this.type_id="";
 
 	this.createTransaction = function (obj){
 
@@ -91,6 +93,11 @@ function transactionhandler(){
 
 
 	this.getTransaction=function(type, id){
+
+		//new transaction
+		if (id==0)
+			return new transaction();
+
 		//could break out to 3 gets to make it more clear.
 		var check;
 		if(type=="incomes"){

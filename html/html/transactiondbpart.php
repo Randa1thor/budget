@@ -1,58 +1,98 @@
 <?php
 
 require_once("./database/databaseconnect.php");
+require_once("./transactionpost.php");
 
 
-//take post if post get if new type or record or both
+//retrieve posted data:
+$_POST=(array) json_decode(file_get_contents("php://input",true)) ;
 
-$v=(array) json_decode(file_get_contents("php://input",true)) ;
-//$v = json_decode(stripslashes(file_get_contents("php://input",true)));
-//echo $v;
+//$_POST = json_decode(stripslashes(file_get_contents("php://input",true)));
 
-if (!empty($v))
+/* if something was posted otherwise treat as fresh db transaction grab
+      test if new/update/actual transaction
+      New
+        insert type [name, Description]
+        get inserted id
+        use update to create revolving with new type
+
+      update
+        test if has transaction
+        yes
+          update changes to already created transaction
+        no
+          insert changes
+
+      actual
+        put into actual table with date
+*/
+
+if (!empty($_POST))
 {
-    print_r($v);
-    echo "recieved json \n";
-    if($v['action']=="new"){
+    //whole process may error probably need to catch for errors or malformed posted data.
 
-      //should test for duplicate names!  {feature}  db could refuse by making field unique still have to catch and display error
-        $sql="INSERT INTO expense_type
+
+    $edits=new Edits();
+    $edits->setEdits((array) json_decode($_POST["edits"]));
+
+    //var_dump(get_object_vars($v));
+
+    $transaction="";
+    if($edits->type=="expenses"){
+      $transaction="expense";
+    }elseif($edits->type=="incomes"){
+      $transaction="income";
+    }else{
+      exit;//failure
+    }
+
+
+    echo "recieved json \n";
+    if($_POST['action']=="new"){
+      echo "making new type";
+      //IDEA:should test for duplicate names!  {feature}  db could refuse by making field unique still have to catch and display error
+        $sql="INSERT INTO " . $transaction . "_type
         (Type, Description)
-        Values (:name, null)";
+        Values (:name, :descr)";
 
         $stmt= $dpo->prepare($sql);
-        $stmt->execute($v);
+        $stmt->execute($edits->editTypeData());
 
-        $v["types_id"] = $db->lastInsertId();
-        $v["action"]="update";//causes it to fall through
+        $edits->type_id = $db->lastInsertId();
+        $_POST["action"]="update";//causes it to fall through
 
     }//this falls through to update transactions not my favorite but it works
+    //// IDEA: would all work better as an object then rather than fall through could call method specifically
 
     $sql="";//probably a bottle neck strings that resize are problems
-    if($v["action"]=="update"){//needs to make sure there is even anything worth updating
+    if($_POST["action"]=="update"){//needs to make sure there is even anything worth updating
+
+
         echo "updating \n";
-        if(empty($v["tid"])){
+
+        print_r($edits);
+
+        if(empty($edits["tid"])){
 
 
 
           echo "new insert\n";
-          $sql = "INSERT INTO expense_revolving
-          (Amount, Type_ID, Affected_Account_ID)
-          VALUES (:amount,:types_id,:accounttypes_id)";
+          $sql = "INSERT INTO " . $transaction . "_revolving
+          (Due_Day, Start_Date, Interim, Amount, Type_ID, Affected_Account_ID, Description, End_Date)
+          VALUES (:dueday, :startdate, :interim, :amount, :types_id,:accounttypes_id, null, :enddate)";
+
+          unset($edits["tid"]);
         }
         else{
-          $sql = "UPDATE expense_revolving
+          $sql = "UPDATE " . $transaction . "_revolving
           SET Due_Day=:dueday, Start_Date=:startdate, Interim_Days=:interim, Amount=:amount, Type_ID=:types_id, Description=null, Affected_Account_ID=:accounttypes_id, End_Date=:enddate
           WHERE id=:tid";
         }
 
 
-
-        $age = array("amount"=>"3500", "types_id"=>"2", "accounttypes_id"=>"1", "something"=>"2");
-        print_r($v);
         try {
           $stmt= $pdo->prepare($sql);
-          $stmt->execute($age);
+          $stmt->execute($edits);
         } catch (\PDOException $e) {
              throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }

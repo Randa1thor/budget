@@ -16,7 +16,7 @@
 
  <select id="types" onchange="edittrans()">
  	<option value="apple">Apple</option>
- 	<option value="new">New</option>
+ 	<option value="expenses0">New</option>
  </select>
  <input type="checkbox" value=false id="editchecked" onchange="edittrans()">Edit<div id="transactionerror"></div>
 
@@ -66,12 +66,13 @@
 
 	function edittrans(){
 		clearEdit();
+    var e=document.getElementById("types");
 
-		if(document.getElementById("types").value=="new" || document.getElementById("editchecked").checked ==true){
+		if(e.options[e.selectedIndex].text=="New" || document.getElementById("editchecked").checked ==true){
       //check if new or editing
 			document.getElementById("edittransdiv").style.display="block";
       //show editing div if new leave blank
-			if(document.getElementById("types").value=="new")
+			if(e.options[e.selectedIndex].text=="New")
 				return;
 			editNotSaved();
 
@@ -107,8 +108,20 @@
 	function updateTransactions(){
       var f=new form();
       var v={"edits":"","action":""};
-      v.edits=f.insertNew();;
-      v.action="update";
+      v.edits=f.insertNew();
+
+
+
+      if(v.edits.types_id==0)
+        v.action="new";
+      else {
+        v.action="update";
+      }
+
+
+
+
+
       console.log("Printing s: ");
       console.log(v);
       loadDoc(JSON.stringify(v),console.log);
