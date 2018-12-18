@@ -60,7 +60,7 @@ function form(){
 			err+=" no cycle/day affected ";
 		if(!obj.amount){
 			err+= "no amount ";
-      document.getElementsByName("amount")[0].value="";
+      document.getElementsByName("amount")[0].value="0.00";
     }else{
       document.getElementsByName("amount")[0].value=obj.amount.substr(0,obj.amount.length-2) + "." + obj.amount.substr(obj.amount.length-2);
     }

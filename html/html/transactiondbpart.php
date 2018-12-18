@@ -11,6 +11,7 @@ $v=(array) json_decode(file_get_contents("php://input",true)) ;
 
 if (!empty($v))
 {
+    print_r($v);
     echo "recieved json \n";
     if($v['action']=="new"){
 
@@ -32,24 +33,26 @@ if (!empty($v))
         echo "updating \n";
         if(empty($v["tid"])){
 
-          $v["descr"]=NULL;
-          $v["lastactual"]="";
+
 
           echo "new insert\n";
           $sql = "INSERT INTO expense_revolving
-          (Due_Day, Start_Date, Interim_Days, Last_Actual_ID, Amount, Type_ID, Description, Affected_Account_ID, End_Date)
-          VALUES (null,null,null,null,3000,3,null,1,null)";
+          (Amount, Type_ID, Affected_Account_ID)
+          VALUES (:amount,:types_id,:accounttypes_id)";
         }
         else{
           $sql = "UPDATE expense_revolving
-          SET Due_Day=:duedate, Start_Date=:startdate, Interim_Days=:interim, Amount=:amount, Type_ID=:types_id, Description=null, Affected_Account_ID=:affectedaccounttypes_id, End_Date=:enddate
+          SET Due_Day=:dueday, Start_Date=:startdate, Interim_Days=:interim, Amount=:amount, Type_ID=:types_id, Description=null, Affected_Account_ID=:accounttypes_id, End_Date=:enddate
           WHERE id=:tid";
         }
-        print_r($v);
 
+
+
+        $age = array("amount"=>"3500", "types_id"=>"2", "accounttypes_id"=>"1", "something"=>"2");
+        print_r($v);
         try {
           $stmt= $pdo->prepare($sql);
-          $stmt->execute();
+          $stmt->execute($age);
         } catch (\PDOException $e) {
              throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }

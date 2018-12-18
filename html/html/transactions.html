@@ -106,11 +106,12 @@
 
 	function updateTransactions(){
       var f=new form();
-      var s=f.insertNew();
-      s["action"]="update";
+      var v={"edits":"","action":""};
+      v.edits=f.insertNew();;
+      v.action="update";
       console.log("Printing s: ");
-      console.log(s);
-      loadDoc(JSON.stringify(s),console.log);
+      console.log(v);
+      loadDoc(JSON.stringify(v),console.log);
 
 	}
 
