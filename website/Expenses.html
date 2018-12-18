@@ -63,41 +63,39 @@
 
 <!--Date-->
 
-                      <div class="nmem-input-pair mandatory">
-                          <label>Date: <span class="req_field">*</span></label>
+                      <div class="input">
+                          <label>Due Date: <span class="req_field">*</span></label>
                           <div class="row-field">
-                              <input path="expense.expense_date" id="expense_date" class="txt-field date-field-fy"/>
-                              <errors path="expense.expense_date" class="field-error"></errors>
+                              <input id="expense_date" path="expense.expense_date" class="txt-field date-field-fy"/>
                           </div>
                       </div>
 <!--Account Type-->
-                      <div class="nmem-input-pair mandatory">
-                          <label>Account Type:<span class="req_field"class="typelist">*</span></label>
+                      <div class="input">
+                          <label>Account Type:<span class="typelist">*</span></label>
                           <div class="row-field">
-                              <select path="expense.id" id="types" onchange="edittrans()" style="height: 24px;width:150px !important" class="chosen-select-width" tabindex="1">
+                              <select id="types" path="expense.id" onchange="edittrans()" style="height: 24px;width:150px !important" class="chosen-select-width" tabindex="1">
                                   <option value="" label="Select Account Name" />
                                   <option value="apple">Apple</option>
                                   <option value="new">New</option>
                               </select>
-                              <input type="checkbox" value=false id="editchecked" onchange="edittrans()">Edit<div id="transactionerror"></div>
+                              <input type="checkbox" value=false id="editchecked" onchange="edittrans()">Edit
                           </div>
                       </div>
 
 
                       <fieldset>
                           <hr>
-                          <div style="margin-left: 100px;" id="expenseDiv">
-
-                              <div style="float: left;width: 685px;margin-top: 10px;margin-bottom: 10px;">
-                                  <div style="float: left; width: 200px; text-align: center;">
+                          <div id="expenseDiv">
+                              <div style="width: 685px;margin-top: 10px;margin-bottom: 10px;">
+                                  <div id="Expense Type">
                                       <label>Expense Type</label>
                                   </div>
 
-                                  <div style="float: left; width: 100px; text-align: center;">
+                                  <div id="Cost">
                                       <label>Cost</label>
                                   </div>
 
-                                  <div style="float: left; width: 300px; text-align: center;">
+                                  <div id="Description">
                                       <label>Description</label>
                                   </div>
                               </div>
@@ -117,10 +115,7 @@
                               <div style="width:305px; height: 24px;float:left;">
                                   <textarea path="remark" class="txt-field" style="width:300px;"></textarea>
                               </div>
-           <!--Add Expense Button-->
-                              <div style="width:50px; height: 24px;float:left;">
-                                  <a onclick="addExpense();"><input title="Add Expense" type="button"  style="font-size: 10px; margin-top: -1px; margin-left: 20px;"></a>
-                              </div>
+
                           </div>
                       </fieldset>
                   </fieldset>
