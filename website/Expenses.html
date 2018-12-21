@@ -66,14 +66,14 @@
                       <div class="input">
                           <label>Due Date: <span class="req_field">*</span></label>
                           <div class="row-field">
-                              <input id="expense_date" path="expense.expense_date" class="txt-field date-field-fy"/>
+                              <input id="date" path="expense.expense_date" class="txt-field date-field-fy"/>
                           </div>
                       </div>
 <!--Account Type-->
                       <div class="input">
                           <label>Account Type:<span class="typelist">*</span></label>
                           <div class="row-field">
-                              <select id="types" path="expense.id" onchange="edittrans()" style="height: 24px;width:150px !important" class="chosen-select-width" tabindex="1">
+                              <select id="accounttypes" path="expense.id" onchange="edittrans()" style="height: 24px;width:150px !important" class="chosen-select-width" tabindex="1">
                                   <option value="" label="Select Account Name" />
                                   <option value="apple">Apple</option>
                                   <option value="new">New</option>
@@ -101,7 +101,7 @@
                               </div>
             <!--Expense DropList-->
                               <div style="width:215px; height: 24px;float:left;padding-right:10px;">
-                                  <select path="name"  style="height: 24px;width:150px !important" class="chosen-select-width" tabindex="1">
+                                  <select id="types" path="name"  style="height: 24px;width:150px !important" class="chosen-select-width" tabindex="1">
                                       <option value="" label="Select Expense Name" />
                                       <option value="groceries">Groceries</option>
                                       <option value="internet">Internet</option>
@@ -109,7 +109,7 @@
                               </div>
             <!--Cost Text Box-->
                               <div style="width:55px; height: 24px;float:left;padding-right:10px;">
-                                  <input path="payment" id="cost" class="txt-field number-field" maxlength="6" style="width:50px;" onfocusout="calTotalCost(0)" onKeyDown="if(event.keyCode==13) calTotalCost(0)"/>
+                                  <input path="payment" id="amount" class="txt-field number-field" maxlength="6" style="width:50px;" onfocusout="calTotalCost(0)" onKeyDown="if(event.keyCode==13) calTotalCost(0)"/>
                               </div>
             <!--Description Text Box-->
                               <div style="width:305px; height: 24px;float:left;">
@@ -119,6 +119,21 @@
                           </div>
                       </fieldset>
                   </fieldset>
+
+
+          <!--Editable Things like due day interim days start date end date and normal Amount -->
+                  <div style="display: none;" id="edittransdiv">
+                    <div id="edittranscontainer">
+                      Name <input name="name">
+                      Start Date <input name="startdate">
+                      Due Date <input name="dueday">
+                      Interim Date <input name="interim">(Days)
+                      End Date <input name="enddate">
+                      <input type="hidden" value="0" name="tid">
+                    </div>
+                  </div>        
+
+
               </div>
 
               <div class="mem-input-pair" style="margin-left: 184px;">

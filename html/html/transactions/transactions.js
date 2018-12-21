@@ -37,6 +37,7 @@ function transaction () {
 
 }
 
+
 function account(){
 	this.type_id;
 	this.type;

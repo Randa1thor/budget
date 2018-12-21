@@ -58,10 +58,11 @@ function form(){
 			err+=" no start date ";;
 		if(!obj.dueday || !obj.interimdays)
 			err+=" no cycle/day affected ";
-		if(!obj.amount){
+		if(!obj.amount){//best to change to an object get amount;
 			err+= "no amount ";
       document.getElementsByName("amount")[0].value="0.00";
     }else{
+			console.log("made it to second amount");
       document.getElementsByName("amount")[0].value=obj.amount.substr(0,obj.amount.length-2) + "." + obj.amount.substr(obj.amount.length-2);
     }
     document.getElementsByName("tid")[0].value=obj.tid;
@@ -91,6 +92,19 @@ function form(){
 				result[this.inputnames[i]]=document.getElementsByName(this.inputnames[i])[0].value;
 		}
 
+
+		//probably should move to php to catch any data posted to website.
+		//correct amount for db insert
+		n=result.amount.indexOf(".");
+
+		if(n<0){//-1 no decimal
+			result.amount=result.amount+"00";
+		}else if(n>result.amount.length-3){
+			result.amount=result.amount.substr(0,n)+result.amount.substr(n+1)+"0";
+		}else{
+			result.amount=result.amount.substr(0,n)+result.amount.substr(n+1);
+		}
+
 		return result;
 	}
 
@@ -103,15 +117,25 @@ function form(){
 		trans=this.transactionhandler.getTransaction(result[0],result[1]);//checks for new in transaction.js
 
 		document.getElementsByName("name")[0].value=trans.type;
-		document.getElementsByName("startdate")[0].value=trans.startdate;
+		document.getElementsByName("startdate")[0].value=this.getReadableDate(trans.startdate);
 		document.getElementsByName("dueday")[0].value=trans.dueday;
-		document.getElementsByName("interim")[0].value=trans.interimdays;
-		document.getElementsByName("enddate")[0].value=trans.enddate;
+
+		if(trans.interimdays!="")
+			document.getElementsByName("interim")[0].value=trans.interimdays/86400;
+
+		document.getElementsByName("enddate")[0].value=this.getReadableDate(trans.enddate);
 		document.getElementsByName("tid")[0].value=trans.tid;
 
 		this.selectAccount(trans.affectedaccountid);
 
-		document.getElementsByName("amount")[0].value=trans.amount;
+
+		if(!trans.amount){//prob need an getAmount somewhere no design for it though with error handling
+      document.getElementsByName("amount")[0].value="0.00";
+    }else{
+			console.log("made it to second amount second method");
+      document.getElementsByName("amount")[0].value=trans.amount.substr(0,trans.amount.length-2) + "." + trans.amount.substr(trans.amount.length-2);
+    }
+
 
 			 //theres a better way with input node list couldn't get it to work
 			console.log(this.transactionhandler.getTransaction(result[0],result[1]));
@@ -132,6 +156,24 @@ function form(){
 				}
 			}
 	}
+
+	this.getReadableDate=function(milidate){
+
+		console.log("milidate: "+milidate);
+		if(milidate==""){
+			return milidate;
+		}
+
+
+		milidate=milidate+"000";//the difference between php strtotime and javascript date.
+		d=new Date();
+		d.setTime(milidate);
+
+
+		return (d.getMonth()+1) + "/" + d.getDate() + "/" + d.getFullYear();
+	}
+
+
 
 	this.getSelectValues = function (){//might want to break out to individual select retrieval
 		var result={};

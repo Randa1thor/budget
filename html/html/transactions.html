@@ -44,7 +44,7 @@
  <div>Amount <input name="amount"></div>
  <div>Date <input name="date"></div>
 
- <div><input type="submit" value="update" onclick="updateTransactions()"></div>
+ <div><input id="updatebtn" type="submit" value="update" onclick="updateTransactions()"></div>
 
 
 
@@ -58,7 +58,7 @@
 	//really need to create a function to handle all of this so that eliminates global variables.
 
 
-	var transtypes = document.getElementById("types");//global variables are bad should put into an object
+	//var transtypes = document.getElementById("types");//global variables are bad should put into an object
 
   var frm=new form();
 
@@ -93,7 +93,7 @@
 
 
 	function checkSelected(){
-
+      var transtypes = document.getElementById("types");
 		  var str = transtypes.options[transtypes.selectedIndex].value;
 		  frm.checkEditErrors("transactionerror",str);
 	}
@@ -112,18 +112,18 @@
 
 
 
-      if(v.edits.types_id==0)
+      if(v.edits.types_id==0){
         v.action="new";
+      }
       else {
         v.action="update";
       }
 
-
-
-
+      v.edits=JSON.stringify(v.edits);
 
       console.log("Printing s: ");
-      console.log(v);
+      console.log(JSON.stringify(v));
+
       loadDoc(JSON.stringify(v),console.log);
 
 	}

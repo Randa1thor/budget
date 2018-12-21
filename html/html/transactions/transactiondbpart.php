@@ -58,7 +58,7 @@ if (!empty($_POST))
         $stmt= $dpo->prepare($sql);
         $stmt->execute($edits->editTypeData());
 
-        $edits->type_id = $db->lastInsertId();
+        $edits->type_id["types_id"]  = $db->lastInsertId();
         $_POST["action"]="update";//causes it to fall through
 
     }//this falls through to update transactions not my favorite but it works
@@ -72,7 +72,7 @@ if (!empty($_POST))
 
         print_r($edits);
 
-        if(empty($edits["tid"])){
+        if(empty($edits->tid["tid"])){
 
 
 
@@ -81,7 +81,7 @@ if (!empty($_POST))
           (Due_Day, Start_Date, Interim, Amount, Type_ID, Affected_Account_ID, Description, End_Date)
           VALUES (:dueday, :startdate, :interim, :amount, :types_id,:accounttypes_id, null, :enddate)";
 
-          unset($edits["tid"]);
+
         }
         else{
           $sql = "UPDATE " . $transaction . "_revolving
@@ -90,18 +90,20 @@ if (!empty($_POST))
         }
 
 
+        echo "revolving data: ";
+        print_r($edits->editRevolvingData());
         try {
           $stmt= $pdo->prepare($sql);
-          $stmt->execute($edits);
+          $stmt->execute($edits->editRevolvingData());
         } catch (\PDOException $e) {
              throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }
 
 
-        if(empty($v["tid"])){
-          $v["tid"] = $pdo->lastInsertId();
+        if(empty($edits->tid["tid"])){
+          $edits->tid["tid"] = $pdo->lastInsertId();
         }
-        echo $v["tid"];
+        echo $edits->tid["tid"];
     }
     exit;
 }
