@@ -99,7 +99,7 @@
 
        }
      };
-     xhttp.open("POST", "../html/html/transactions/transactiondbpart.php", true);
+     xhttp.open("POST", "../html/transactions/transactiondbpart.php", true);
      xhttp.setRequestHeader("Content-type", "application/json");
        xhttp.send(data);
        console.log("sending");

@@ -120,10 +120,12 @@ function form(){
 		document.getElementsByName("startdate")[0].value=this.getReadableDate(trans.startdate);
 		document.getElementsByName("dueday")[0].value=trans.dueday;
 
-		if(trans.interimdays!="")
-			document.getElementsByName("interim")[0].value=trans.interimdays/86400;
-		else {
+		if(trans.interimdays==""  || !trans.interimdays){
 			document.getElementsByName("interim")[0].value="";
+		}
+
+		else {
+			document.getElementsByName("interim")[0].value=trans.interimdays/86400;
 		}
 
 		document.getElementsByName("enddate")[0].value=this.getReadableDate(trans.enddate);
