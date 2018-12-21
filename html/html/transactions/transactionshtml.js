@@ -56,7 +56,7 @@ function form(){
 		var err="";
 		if(!obj.startdate)
 			err+=" no start date ";;
-		if(!obj.dueday || !obj.interimdays)
+		if(!obj.dueday && !obj.interimdays)
 			err+=" no cycle/day affected ";
 		if(!obj.amount){//best to change to an object get amount;
 			err+= "no amount ";
@@ -122,6 +122,9 @@ function form(){
 
 		if(trans.interimdays!="")
 			document.getElementsByName("interim")[0].value=trans.interimdays/86400;
+		else {
+			document.getElementsByName("interim")[0].value="";
+		}
 
 		document.getElementsByName("enddate")[0].value=this.getReadableDate(trans.enddate);
 		document.getElementsByName("tid")[0].value=trans.tid;
@@ -160,8 +163,8 @@ function form(){
 	this.getReadableDate=function(milidate){
 
 		console.log("milidate: "+milidate);
-		if(milidate==""){
-			return milidate;
+		if(!milidate || milidate==""){
+			return "";
 		}
 
 

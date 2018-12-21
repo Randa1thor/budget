@@ -1,7 +1,7 @@
 <?php
 
-require_once("./database/databaseconnect.php");
-require_once("./transactionpost.php");
+require_once("../database/databaseconnect.php");
+require_once("../transactions/transactionpost.php");
 
 
 //retrieve posted data:

@@ -27,7 +27,7 @@ function transaction () {
 		this.type=obj.Type;
 		this.affectedaccountid=obj.Affected_Account_ID;
 
-		if(obj.Type_ID){
+		if(obj.Type_ID){//I don't know why this is here should always have a type_id it's bound to
 			this.type_id=obj.Type_ID;
 		}else{
 			this.type_id=obj.ET_Type_ID
