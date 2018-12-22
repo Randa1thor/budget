@@ -6,7 +6,17 @@ function form(){
 	//built with select's at end for lazy programming
 	this.selectnames=["types","accounttypes"];
 	this.inputnames=["name","startdate","dueday","interim","enddate","tid", "amount","date"];
+
+	this.submitbutton=["updatebtn"];
+
   this.transactionhandler=new transactionhandler();
+
+	this.clearEdits=function(){
+		document.getElementById("transactionerror").innerHTML="";
+		for(var name in this.inputnames){
+			document.getElementsByName(this.inputnames[name])[0].value="";
+		}
+	}
 
 
   this.fillTransactions=function (accounts, incomes, expenses){
@@ -24,7 +34,7 @@ function form(){
 		}
 
 		if(hasnew)
-		options+="<option value=\"expenses0\">New</option>"
+		options+="<option value=\""+type+"0\">New</option>"
 
 		document.getElementById(listid).innerHTML=options;
 	}
@@ -62,7 +72,6 @@ function form(){
 			err+= "no amount ";
       document.getElementsByName("amount")[0].value="0.00";
     }else{
-			console.log("made it to second amount");
       document.getElementsByName("amount")[0].value=obj.amount.substr(0,obj.amount.length-2) + "." + obj.amount.substr(obj.amount.length-2);
     }
     document.getElementsByName("tid")[0].value=obj.tid;
@@ -95,15 +104,20 @@ function form(){
 
 		//probably should move to php to catch any data posted to website.
 		//correct amount for db insert
-		n=result.amount.indexOf(".");
+		if(result.amount || result.amount!=""){
 
-		if(n<0){//-1 no decimal
-			result.amount=result.amount+"00";
-		}else if(n>result.amount.length-3){
-			result.amount=result.amount.substr(0,n)+result.amount.substr(n+1)+"0";
-		}else{
-			result.amount=result.amount.substr(0,n)+result.amount.substr(n+1);
+			n=result.amount.indexOf(".");
+
+			if(n<0){//-1 no decimal
+				result.amount=result.amount+"00";
+			}else if(n>result.amount.length-3){
+				result.amount=result.amount.substr(0,n)+result.amount.substr(n+1)+"0";
+			}else{
+				result.amount=result.amount.substr(0,n)+result.amount.substr(n+1);
+			}
 		}
+
+		//update transaction in javascript may wish to do this only after save!
 
 		return result;
 	}
@@ -112,9 +126,9 @@ function form(){
 		//will need to upgrade this to use array names to make it more modular
 		var e = document.getElementById(this.selectnames[0]);
 		var id = e.options[e.selectedIndex].value;
-		result=this.transactionhandler.splitOptionValue(id);
+		var result=this.transactionhandler.splitOptionValue(id);
 
-		trans=this.transactionhandler.getTransaction(result[0],result[1]);//checks for new in transaction.js
+		var trans=this.transactionhandler.getTransaction(result[0],result[1]);//checks for new in transaction.js
 
 		document.getElementsByName("name")[0].value=trans.type;
 		document.getElementsByName("startdate")[0].value=this.getReadableDate(trans.startdate);
@@ -135,15 +149,28 @@ function form(){
 
 
 		if(!trans.amount){//prob need an getAmount somewhere no design for it though with error handling
-      document.getElementsByName("amount")[0].value="0.00";
-    }else{
-			console.log("made it to second amount second method");
+      document.getElementsByName("amount")[0].value="";
+    }else if(trans.amount!=0){
       document.getElementsByName("amount")[0].value=trans.amount.substr(0,trans.amount.length-2) + "." + trans.amount.substr(trans.amount.length-2);
-    }
+    }else{
+			document.getElementsByName("amount")[0].value="";
+		}
 
 
 			 //theres a better way with input node list couldn't get it to work
 			console.log(this.transactionhandler.getTransaction(result[0],result[1]));
+	}
+
+	this.updateTransaction=function (obj){
+
+		console.log("updating transaction: "+ obj);
+
+
+		if(!obj)
+			return;
+
+		this.transactionhandler.getTransaction(obj['type'],obj['type_id']).updateTransaction(obj);
+		//this.checkEditErrors();
 	}
 
 
@@ -164,7 +191,6 @@ function form(){
 
 	this.getReadableDate=function(milidate){
 
-		console.log("milidate: "+milidate);
 		if(!milidate || milidate==""){
 			return "";
 		}

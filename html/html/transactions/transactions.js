@@ -35,6 +35,21 @@ function transaction () {
 
 	}
 
+	this.updateTransaction= function (obj){
+		this.tid=obj.tid;
+		this.startdate=obj.startdate;
+		this.enddate=obj.enddate;
+		this.amount=obj.amount;
+		if(obj.lastactualid)
+			this.lastactual=obj.lastactualid;
+		this.dueday=obj.dueday;
+		this.interimdays=obj.interim;
+		this.type=obj.name;
+		this.affectedaccountid=obj.accounttypes_id;
+
+		this.Type_ID=obj.type_id;
+	}
+
 }
 
 
@@ -93,6 +108,7 @@ function transactionhandler(){
 
 
 
+
 	this.getTransaction=function(type, id){
 
 		//new transaction
@@ -108,6 +124,7 @@ function transactionhandler(){
 		}else{
 			check=this.accounts;
 		}
+
 
 		return check.find(o => o.type_id === id);
 

@@ -47,51 +47,50 @@ if (!empty($_POST))
     }
 
 
-    echo "recieved json \n";
+
     if($_POST['action']=="new"){
-      echo "making new type";
+
       //IDEA:should test for duplicate names!  {feature}  db could refuse by making field unique still have to catch and display error
         $sql="INSERT INTO " . $transaction . "_type
         (Type, Description)
         Values (:name, :descr)";
 
-        $stmt= $dpo->prepare($sql);
+        $stmt= $pdo->prepare($sql);
         $stmt->execute($edits->editTypeData());
 
-        $edits->type_id["types_id"]  = $db->lastInsertId();
+        $edits->type_id["type_id"]  = $pdo->lastInsertId();
         $_POST["action"]="update";//causes it to fall through
 
     }//this falls through to update transactions not my favorite but it works
     //// IDEA: would all work better as an object then rather than fall through could call method specifically
+    else{
+
+        $sql="UPDATE " . $transaction . "_type
+        SET Type=:name, Description=:descr
+        WHERE ID=:type_id";
+
+        $stmt= $pdo->prepare($sql);
+        $stmt->execute($edits->editTypeData());
+    }
 
     $sql="";//probably a bottle neck strings that resize are problems
     if($_POST["action"]=="update"){//needs to make sure there is even anything worth updating
 
-
-        echo "updating \n";
-
-        print_r($edits);
-
         if(empty($edits->tid["tid"])){
 
 
-
-          echo "new insert\n";
           $sql = "INSERT INTO " . $transaction . "_revolving
-          (Due_Day, Start_Date, Interim, Amount, Type_ID, Affected_Account_ID, Description, End_Date)
-          VALUES (:dueday, :startdate, :interim, :amount, :types_id,:accounttypes_id, null, :enddate)";
+          (Due_Day, Start_Date, Interim_Days, Amount, Type_ID, Affected_Account_ID, Description, End_Date)
+          VALUES (:dueday, :startdate, :interim, :amount, :type_id,:accounttypes_id, null, :enddate)";
 
 
         }
         else{
           $sql = "UPDATE " . $transaction . "_revolving
-          SET Due_Day=:dueday, Start_Date=:startdate, Interim_Days=:interim, Amount=:amount, Type_ID=:types_id, Description=null, Affected_Account_ID=:accounttypes_id, End_Date=:enddate
+          SET Due_Day=:dueday, Start_Date=:startdate, Interim_Days=:interim, Amount=:amount, Type_ID=:type_id, Description=null, Affected_Account_ID=:accounttypes_id, End_Date=:enddate
           WHERE id=:tid";
         }
 
-
-        echo "revolving data: ";
-        print_r($edits->editRevolvingData());
         try {
           $stmt= $pdo->prepare($sql);
           $stmt->execute($edits->editRevolvingData());
@@ -103,7 +102,9 @@ if (!empty($_POST))
         if(empty($edits->tid["tid"])){
           $edits->tid["tid"] = $pdo->lastInsertId();
         }
-        echo $edits->tid["tid"];
+
+
+        echo json_encode($edits->getData());
     }
     exit;
 }
