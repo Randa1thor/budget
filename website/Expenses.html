@@ -51,69 +51,69 @@
 
 <!--Add Expense Box-->
 
-  <div class="frm-block-outer" style="width:70%;">
-      <div class="headinginner">
-          <h3 id="heading" style="margin: 0px;"></h3>
+  <div class="frm-block-outer">
+      <div>
+          <h3></h3>
       </div>
-      <div class="frm-wrapper" style="width: 980px;">
-              <div style="float: right;">
-                  <fieldset class="mem-field-set">
+        <div class="frm-wrapper">
+              <div class="expense-wrapper">
+                  <fieldset>
                       <legend>Add an Expense</legend>
-                      <input path="id" id="id" type="hidden" class="txt-field" />
+                      <input type="hidden" class="txt-field" />
 
 <!--Date-->
 
-                      <div class="input">
-                          <label>Due Date: <span class="req_field">*</span></label>
-                          <div class="row-field">
-                              <input id="expense_date" path="expense.expense_date" class="txt-field date-field-fy"/>
+                      <div>
+                          <label>Due Date: <span>*</span></label>
+                          <div>
+                              <input class="txt-field date-field-fy"/>
                           </div>
                       </div>
 <!--Account Type-->
-                      <div class="input">
+                      <div class="account">
                           <label>Account Type:<span class="typelist">*</span></label>
-                          <div class="row-field">
-                              <select id="types" path="expense.id" onchange="edittrans()" style="height: 24px;width:150px !important" class="chosen-select-width" tabindex="1">
+                          <div>
+                              <select onchange="edittrans()" tabindex="1">
                                   <option value="" label="Select Account Name" />
                                   <option value="apple">Apple</option>
                                   <option value="new">New</option>
                               </select>
-                              <input type="checkbox" value=false id="editchecked" onchange="edittrans()">Edit
+                              <input type="checkbox" value=false onchange="edittrans()">Edit
                           </div>
                       </div>
 
 
                       <fieldset>
                           <hr>
-                          <div id="expenseDiv">
-                              <div style="width: 685px;margin-top: 10px;margin-bottom: 10px;">
-                                  <div id="Expense Type">
+                          <div class="expenseDiv">
+                              <div>
+                                  <div class="Expense Type">
                                       <label>Expense Type</label>
                                   </div>
 
-                                  <div id="Cost">
+                                  <div class="inputCost">
                                       <label>Cost</label>
                                   </div>
 
-                                  <div id="Description">
+                                  <div class="inputDescription">
                                       <label>Description</label>
                                   </div>
                               </div>
             <!--Expense DropList-->
-                              <div style="width:215px; height: 24px;float:left;padding-right:10px;">
-                                  <select path="name"  style="height: 24px;width:150px !important" class="chosen-select-width" tabindex="1">
+                              <div class="expense_droplist">
+                                  <select class="expense_select" tabindex="1">
                                       <option value="" label="Select Expense Name" />
                                       <option value="groceries">Groceries</option>
                                       <option value="internet">Internet</option>
                                   </select>
                               </div>
             <!--Cost Text Box-->
-                              <div style="width:55px; height: 24px;float:left;padding-right:10px;">
-                                  <input path="payment" id="cost" class="txt-field number-field" maxlength="6" style="width:50px;" onfocusout="calTotalCost(0)" onKeyDown="if(event.keyCode==13) calTotalCost(0)"/>
+                              <div class="cost">
+                                  <input  maxlength="6"/>
                               </div>
             <!--Description Text Box-->
-                              <div style="width:305px; height: 24px;float:left;">
-                                  <textarea path="remark" class="txt-field" style="width:300px;"></textarea>
+                              <div class="description">
+                                  <textarea></textarea>
                               </div>
 
                           </div>
@@ -121,9 +121,9 @@
                   </fieldset>
               </div>
 
-              <div class="mem-input-pair" style="margin-left: 184px;">
+              <div class="button" >
                   <div>
-                      <input id="updatebtn" type="submit" value="Save" onclick="updateTransactions()" style="width:105px;" />
+                      <input class="save" type="submit" value="Save" onclick="updateTransactions()" />
                   </div>
               </div>
 
