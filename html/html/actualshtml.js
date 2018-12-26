@@ -1,6 +1,8 @@
 function ActualTable(){
   this.actual_container="actuals";
   this.actuals;
+  // IDEA:
+  //this.row_container="<tr>";//should probably use some kind of array for adjustable html mapping.
 
 
   this.fillActuals=function(list){
@@ -11,15 +13,25 @@ function ActualTable(){
 
     var self=this;
     var s="<tr> <td style=\"display: none;\">ID</td> <td>Date</td> <td>Amount</td> <td>Account</td> </tr>";
-    
+
     if(this.actuals && id>0){
+
       this.actuals[id].forEach(function(element){
-        s+="<tr>";
-        s=s+"<td style=\"display: none;\">"+element["ID"]+"</td>";
-        s=s+"<td>"+self.getReadableDate(element["Date"])+"</td>";
-        s=s+"<td>"+self.displayAmount(element["Amount"])+"</td>";
-        s=s+"<td>"+self.selectAccount(element["Affected_Account_ID"])+"</td>";
-        s+="</tr>";
+        if(element["ID"]){//data directly from database
+          s+="<tr>";
+          s=s+"<td style=\"display: none;\">"+element["ID"]+"</td>";
+          s=s+"<td>"+self.getReadableDate(element["Date"])+"</td>";
+          s=s+"<td>"+self.displayAmount(element["Amount"])+"</td>";
+          s=s+"<td>"+self.selectAccount(element["Affected_Account_ID"])+"</td>";
+          s+="</tr>";
+        }else{ //data from php class
+          s+="<tr>";
+          s=s+"<td style=\"display: none;\">"+element["id"]+"</td>";
+          s=s+"<td>"+self.getReadableDate(element["date"])+"</td>";
+          s=s+"<td>"+self.displayAmount(element["amount"])+"</td>";
+          s=s+"<td>"+self.selectAccount(element["affectedaccount_id"])+"</td>";
+          s+="</tr>";
+        }
 
       });
     }

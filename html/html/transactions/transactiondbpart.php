@@ -55,7 +55,7 @@ if (!empty($_POST))
       $stmt=$pdo->prepare($sql);
       $stmt->execute($edits->getActualData());
 
-      echo json_encode(array_merge($edits->getActualData(),array("id"=>$pdo->lastInsertId())));
+      echo json_encode(array_merge($edits->getActualData(),array("id"=>$pdo->lastInsertId(),"action"=>$_POST['action'])));
       exit;
     }
 

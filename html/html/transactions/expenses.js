@@ -93,10 +93,19 @@
  function postedDataResponse(data){
    console.log(data);
    var obj=JSON.parse(data);
-   frm.updateTransaction(obj);
-   var index=document.getElementById("types").selectedIndex;
-   frm.buildhtml("types");
-   document.getElementById("types").selectedIndex=index;
+
+   if(obj['action']=="update"){
+     frm.updateTransaction(obj);
+     var index=document.getElementById("types").selectedIndex;
+     frm.buildhtml("types");
+     document.getElementById("types").selectedIndex=index;
+     return;
+   }
+
+   if(obj['action']=="save"){
+     act.pushActual(obj["type_id"],obj);
+     act.buildhtml(frm.getTypeID()[1]);
+   }
 
  }
 
