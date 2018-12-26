@@ -6,8 +6,6 @@
 
   if type name is updated update retrieved actuals
     intend to use limit for effeciency
-  
-
 
  */
  //really need to create a function to handle all of this so that eliminates global variables.
@@ -17,11 +15,11 @@
  //really this whole thing should be in transactionhtml.js and this should just set if it is expenses or incomes
  //could leave the ajax though it'd make sense to keep it here or another object
  var frm=new form();
-
+ var act=new ActualTable();
 
 
  function edittrans(){
-   clearEdit();
+   frm.clearEdits();
    var e=document.getElementById("types");
 
    if(e.options[e.selectedIndex].text=="New"){
@@ -30,14 +28,15 @@
      document.getElementById("edittransdiv").style.display="block";
      document.getElementsByName("updatebtn")[0].value="Add New";
      //show editing div if new leave blank
-     return
+     act.buildhtml(0);
+     return;
 
 
   }else if(document.getElementById("editchecked").checked ==true){
        document.getElementById("edittransdiv").style.display="block";
        editNotSaved();
 
-       frm.setEditValues();
+
        document.getElementsByName("updatebtn")[0].value="Edit";
 
    }else{
@@ -46,6 +45,9 @@
      checkSelected();
      document.getElementsByName("updatebtn")[0].value="Save";
    }
+
+   frm.setEditValues();
+   act.buildhtml(frm.getTypeID()[1]);
 
  }
 
@@ -61,15 +63,6 @@
      frm.checkEditErrors("transactionerror",str);
  }
 
- function clearEdit(){
-
-   frm.clearEdits();
-   //document.getElementById("transactionerror").innerHTML="";
-   //::TODO:: replace clearChildren with form edit clear so that location of elements is not important.
-   //::TODO:: is done!
-   //clearChildren(document.getElementById("edittranscontainer"));//lazy <~~ clear
- }
-
 
  function updateTransactions(){
 
@@ -79,7 +72,11 @@
      if(v.edits.types_id==0){
        v.action="new";
      }
-     else {
+     else if(frm.isActual()){
+
+       v.action="save";
+
+     }else{
        v.action="update";
      }
 
@@ -100,6 +97,7 @@
    var index=document.getElementById("types").selectedIndex;
    frm.buildhtml("types");
    document.getElementById("types").selectedIndex=index;
+
  }
 
 
@@ -109,11 +107,14 @@
 
    frm.fillTransactions(obj.accounts, obj.incomes, obj.expenses);
 
-   frm.buildhtml("types", "accounttypes");
+   frm.buildhtml("types", "affectedaccount");
 
    checkSelected();
 
    edittrans();
+
+   loadActuals();
+
 
  }
 
@@ -135,5 +136,26 @@
        console.log("sending");
 
  }
+
+ function loadActuals(data, callback) {
+     var xhttp = new XMLHttpRequest();
+     xhttp.onreadystatechange = function() {
+       if (this.readyState == 4 && this.status == 200) {
+         console.log(this.responseText);
+        act.fillActuals(this.responseText);
+
+        act.buildhtml(frm.getTypeID()[1]);
+       }
+     };
+     xhttp.open("POST", "./actualsdbpart.php", true);
+     xhttp.setRequestHeader("Content-type", "application/json");
+       xhttp.send(data);
+       console.log("getting actuals");
+
+ }
+
+
+
+
 
  loadDoc("",firsttime);

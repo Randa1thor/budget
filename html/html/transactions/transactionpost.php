@@ -9,7 +9,7 @@ class Edits{
 
   public $interim=array("interim"=>"");
 
-  public $revolving=array("dueday"=>"","amount"=>"","accounttypes_id"=>"");
+  public $revolving=array("dueday"=>"","amount"=>"","affectedaccount_id"=>"");
 
   public $type;
 
@@ -57,8 +57,9 @@ class Edits{
   }
 
 
-  function newActualData(){
-
+  function getActualData(){
+    return array("amount"=>$this->revolving["amount"],"affectedaccount_id"=>$this->revolving["affectedaccount_id"],
+    "descr"=>$this->type_info["descr"],"date"=>$this->date["date"],"type_id"=>$this->type_id["type_id"]);
   }
 
 

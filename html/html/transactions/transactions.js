@@ -45,7 +45,7 @@ function transaction () {
 		this.dueday=obj.dueday;
 		this.interimdays=obj.interim;
 		this.type=obj.name;
-		this.affectedaccountid=obj.accounttypes_id;
+		this.affectedaccountid=obj.affectedaccountid;
 
 		this.Type_ID=obj.type_id;
 	}
@@ -129,6 +129,9 @@ function transactionhandler(){
 		return check.find(o => o.type_id === id);
 
 	}
+
+
+
 
 	this.splitOptionValue=function(value){
 		//regex return array[2] with [type][id]
