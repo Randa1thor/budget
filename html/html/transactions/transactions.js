@@ -1,15 +1,17 @@
 
 function transaction () {
-	this.tid;
-	this.startdate;
-	this.enddate;
-	this.amount;
-	this.lastactual;
-	this.duedate;
-	this.interimdays;
-	this.type;
-	this.affectedaccountid;
-	this.type_id;
+
+	//not sure if initilizing to null is best but I need it for new transactions
+	this.tid="";
+	this.startdate="";
+	this.enddate="";
+	this.amount="";
+	this.lastactual="";
+	this.duedate="";
+	this.interimdays="";
+	this.type="";
+	this.affectedaccountid="";
+	this.type_id="";
 
 	this.createTransaction = function (obj){
 
@@ -25,7 +27,7 @@ function transaction () {
 		this.type=obj.Type;
 		this.affectedaccountid=obj.Affected_Account_ID;
 
-		if(obj.Type_ID){
+		if(obj.Type_ID){//I don't know why this is here should always have a type_id it's bound to
 			this.type_id=obj.Type_ID;
 		}else{
 			this.type_id=obj.ET_Type_ID
@@ -33,7 +35,23 @@ function transaction () {
 
 	}
 
+	this.updateTransaction= function (obj){
+		this.tid=obj.tid;
+		this.startdate=obj.startdate;
+		this.enddate=obj.enddate;
+		this.amount=obj.amount;
+		if(obj.lastactualid)
+			this.lastactual=obj.lastactualid;
+		this.dueday=obj.dueday;
+		this.interimdays=obj.interim;
+		this.type=obj.name;
+		this.affectedaccountid=obj.affectedaccountid;
+
+		this.Type_ID=obj.type_id;
+	}
+
 }
+
 
 function account(){
 	this.type_id;
@@ -90,7 +108,13 @@ function transactionhandler(){
 
 
 
+
 	this.getTransaction=function(type, id){
+
+		//new transaction
+		if (id==0)
+			return new transaction();
+
 		//could break out to 3 gets to make it more clear.
 		var check;
 		if(type=="incomes"){
@@ -101,9 +125,13 @@ function transactionhandler(){
 			check=this.accounts;
 		}
 
+
 		return check.find(o => o.type_id === id);
 
 	}
+
+
+
 
 	this.splitOptionValue=function(value){
 		//regex return array[2] with [type][id]
