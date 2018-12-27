@@ -21,7 +21,6 @@
  function edittrans(){
    frm.clearEdits();
    var e=document.getElementById("types");
-
    if(e.options[e.selectedIndex].text=="New"){
      //check if new or editing
 
@@ -32,7 +31,7 @@
      return;
 
 
-  }else if(document.getElementById("editchecked").checked ==true){
+  }else if(document.getElementsByName("editchecked")[0].checked ==true){
        document.getElementById("edittransdiv").style.display="block";
        editNotSaved();
 
@@ -139,7 +138,7 @@
 
        }
      };
-     xhttp.open("POST", "../html/transactions/transactiondbpart.php", true);
+     xhttp.open("POST", "http://localhost/budget/html/html/transactions/transactiondbpart.php", true);
      xhttp.setRequestHeader("Content-type", "application/json");
        xhttp.send(data);
        console.log("sending");
@@ -156,7 +155,7 @@
         act.buildhtml(frm.getTypeID()[1]);
        }
      };
-     xhttp.open("POST", "./transactions/transactualsdbpart.php", true);
+     xhttp.open("POST", "http://localhost/budget/html/html/transactions/transactualsdbpart.php", true);
      xhttp.setRequestHeader("Content-type", "application/json");
        xhttp.send(data);
        console.log("getting actuals");

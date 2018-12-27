@@ -12,12 +12,13 @@ function ActualTable(){
   this.buildhtml=function(id){
 
     var self=this;
-    var s="<tr> <td style=\"display: none;\">ID</td> <td>Date</td> <td>Amount</td> <td>Account</td> </tr>";
+    var s="<caption> Expense Data </caption><tr class=\"table_header\"> <th style=\"display: none;\">ID</td> <th>Date</td> <th>Amount</td> <th>Account</td> </tr>";
 
     if(this.actuals && id>0){
 
       this.actuals[id].forEach(function(element){
         if(element["ID"]){//data directly from database
+
           s+="<tr>";
           s=s+"<td style=\"display: none;\">"+element["ID"]+"</td>";
           s=s+"<td>"+self.getReadableDate(element["Date"])+"</td>";

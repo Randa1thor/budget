@@ -36,8 +36,7 @@ function form(){
 		}
 
 		if(hasnew)
-		options+="<option value=\""+type+"0\">New</option>"
-
+		options+="<option value=\""+type+"0\">New</option>"	
 		document.getElementById(listid).innerHTML=options;
 	}
 
