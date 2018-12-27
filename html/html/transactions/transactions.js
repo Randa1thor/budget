@@ -45,7 +45,7 @@ function transaction () {
 		this.dueday=obj.dueday;
 		this.interimdays=obj.interim;
 		this.type=obj.name;
-		this.affectedaccountid=obj.affectedaccountid;
+		this.affectedaccountid=obj.affectedaccount_id;
 
 		this.Type_ID=obj.type_id;
 	}

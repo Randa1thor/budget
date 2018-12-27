@@ -115,7 +115,7 @@ if (!empty($_POST))
           $edits->tid["tid"] = $pdo->lastInsertId();
       }
 
-      echo json_encode(array_merge($edits->editRevolvingData(), $edits->editTypeData()));
+      echo json_encode(array_merge($edits->editRevolvingData(), $edits->editTypeData(), array("action"=>$_POST['action'])));
 
     }
     exit;

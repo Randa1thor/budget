@@ -16,7 +16,7 @@
  //could leave the ajax though it'd make sense to keep it here or another object
  var frm=new form();
  var act=new ActualTable();
- var page_type="expenses";
+ var page_type="incomes";
 
  function edittrans(){
    frm.clearEdits();
@@ -95,9 +95,9 @@
    var obj=JSON.parse(data);
 
    if(obj['action']=="update"){
-     frm.updateTransaction(obj,page_type);
+     frm.updateTransaction(obj, page_type);
      var index=document.getElementById("types").selectedIndex;
-     frm.buildhtml("types");
+     frm.buildhtml("","","types");
      document.getElementById("types").selectedIndex=index;
      return;
    }
@@ -116,12 +116,12 @@
 
    frm.fillTransactions(obj.accounts, obj.incomes, obj.expenses);
 
-   frm.buildhtml("types", "affectedaccount");
+   frm.buildhtml("","affectedaccount","types");
 
    checkSelected();
 
    edittrans();
-   var data={"type": page_type};
+   var data={"type":page_type};
    loadActuals(JSON.stringify(data));
 
 
