@@ -68,7 +68,7 @@ function ActualTable(){
 
 
   this.pushActual=function (id, data){
-    this.actuals[id].push(data);
+    this.actuals[id].unshift(data);
   }
 
 

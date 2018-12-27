@@ -36,7 +36,7 @@ function form(){
 		}
 
 		if(hasnew)
-		options+="<option value=\""+type+"0\">New</option>"	
+		options+="<option value=\""+type+"0\">New</option>"
 		document.getElementById(listid).innerHTML=options;
 	}
 
@@ -70,6 +70,10 @@ function form(){
 		var v=this.transactionhandler.splitOptionValue(value);
 		obj=this.transactionhandler.getTransaction(v[0],v[1]);
 
+		var t=document.getElementById(this.selectnames[0]).selectedIndex;
+
+		if(t==0)
+			return;
 
 		var err="";
 		if(!obj.startdate)
@@ -186,7 +190,7 @@ function form(){
 		if(id==0){
 			return;
 		}
-		var sel=document.getElementById("affectedaccount");
+		var sel=document.getElementById(this.selectnames[1]);
 		var opts = sel.options;
 		var val="accounts"+id;
 		for (var opt, j = 0; opt = opts[j]; j++) {
