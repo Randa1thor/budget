@@ -60,6 +60,8 @@ function form(){
 			this.buildoptions(this.transactionhandler.expenses,expid,true, "expenses");
 		if(accountid)
 			this.buildoptions(this.transactionhandler.accounts,accountid,false, "accounts");
+		if(incid)
+			this.buildoptions(this.transactionhandler.incomes,incid,true, "incomes");
 
 
 		document.getElementsByName("date")[0].value=new Date().toJSON().slice(0,10).replace(/-/g,'/');
@@ -171,12 +173,12 @@ function form(){
 		return this.transactionhandler.splitOptionValue(id);
 	}
 
-	this.updateTransaction=function (obj){
+	this.updateTransaction=function (obj, type){
 
 		if(!obj)
 			return;
 
-		this.transactionhandler.getTransaction("expenses",obj['type_id']).updateTransaction(obj);
+		this.transactionhandler.getTransaction(type,obj['type_id']).updateTransaction(obj);
 		//this.checkEditErrors();
 	}
 
